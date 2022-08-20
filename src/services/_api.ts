@@ -9,13 +9,17 @@ const axios = axios$1.create({
 });
 
 axios.interceptors.request.use((req) => {
+    console.log(req.url);
     const { data } = req;
     toast.loading('Encrypting...', { id: 'encrypt' });
-    if (data && data.encryptContentWhileSending) {
-        data.content = encrypt(data.content!);
+    if (data) {
+        if (data.encryptContentWhileSending) {
+            data.content = encrypt(data.content!);
+        }
+        if (data.password) data.password = encrypt(data.password);
     }
-    if (data.password) data.password = encrypt(data.password!);
     req.data = data;
+    console.log(data);
     toast.remove('encrypt');
     return req;
 });
@@ -30,16 +34,17 @@ axios.interceptors.response.use((response) => {
 });
 
 const getNote = (code: string, password?: string) => {
-    const data = password ? { password: encrypt(password) } : undefined;
-    return axios.get('/api', { params: { id: code }, data });
+    const params: { id: string; password?: string } = { id: code };
+    if (password) params.password = encrypt(password);
+    return axios.get('/api/note', { params });
 };
 
 const uploadNote = (data: Partial<Note>) => {
-    return axios.post('/api', data);
+    return axios.post('/api/note', data);
 };
 
 const updateNote = (code: string, note: Partial<Note>) => {
-    return axios.patch('/api', note, { params: { id: code } });
+    return axios.patch('/api/note', note, { params: { id: code } });
 };
 
 export default { getNote, uploadNote, updateNote };

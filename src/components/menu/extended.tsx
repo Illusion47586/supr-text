@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import useStore from '@store';
+import { encrypt } from '@utils/scripts/crypt-front';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Check } from 'phosphor-react';
@@ -134,7 +135,7 @@ const Extended = () => {
                         checked={values.immutable}
                     />
                 </label>
-                {/* <label>
+                <label>
                     <span>
                         End-to-end encryption, consumes more resources as it happens in the browser.
                     </span>
@@ -146,7 +147,7 @@ const Extended = () => {
                         onBlur={handleBlur}
                         checked={values.encryptContentWhileSending}
                     />
-                </label> */}
+                </label>
                 <button type="submit">
                     <span>Save</span>
                     <Check className={styles.icon} weight="bold" />

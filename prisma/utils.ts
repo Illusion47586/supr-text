@@ -1,10 +1,9 @@
-import { compare } from '@utils/scripts/crypt';
+import { compare, cryptr } from '@utils/scripts/crypt';
+import { decrypt } from '@utils/scripts/crypt-front';
 import Cryptr from 'cryptr';
 
 const authenticate = (data: any, security?: { password?: string; ip?: string }) => {
     try {
-        const { decrypt } = new Cryptr(process.env.NEXT_PUBLIC_CONTENT_KEY!);
-
         const passwordDoesNotMatch =
             data.password &&
             data.password.length > 0 &&
@@ -26,6 +25,7 @@ const authenticate = (data: any, security?: { password?: string; ip?: string }) 
 
 const purifyNoteWithoutOwner = (data: any) => {
     const updatedData = { ...data };
+    updatedData.content = cryptr.decrypt(data.content);
     delete updatedData.password;
     delete updatedData.id;
     delete updatedData.restriced;

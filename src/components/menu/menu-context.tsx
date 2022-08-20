@@ -100,27 +100,26 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
         const data = { ...store.getNote() };
         const { code, content } = data;
         const toastid = `server_contact_${code}`;
-        console.log(data);
         if (data.content === '') {
             toast.error("Content can't be empty!");
             return;
         }
         try {
-            toast.loading(code ? 'Updating' : 'Uploading', { id: toastid });
+            toast.loading(code !== 'local' ? 'Updating' : 'Uploading', { id: toastid });
             const response =
                 code && code !== 'local'
                     ? await api.updateNote(code, data)
                     : await api.uploadNote(data);
             if (response && response.status < 300 && response.status >= 200) {
                 store.changeNote({ ...response.data, content });
-                toast.remove(toastid);
-                toast.success(`Successfully ${code ? 'Updated' : 'Uploaded'}`);
+                toast.success(`Successfully ${code !== 'local' ? 'Updated' : 'Uploaded'}`, {
+                    id: toastid,
+                });
             }
         } catch (error) {
             logger.error(error);
-        } finally {
-            toast.remove(toastid);
         }
+        toast.remove(toastid);
     };
 
     useKey((key) => key.key === '/' && key.altKey, toggleExtended);

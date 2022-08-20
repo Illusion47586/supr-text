@@ -32,7 +32,7 @@ const useStore = create<
 >(
     // persist(
     immer((set: StoreSet, get) => ({
-        notes: new Map<string, Note>([['none', generateNewNote()]]),
+        notes: new Map<string, Note>(),
         current: undefined,
         localLock: false,
         getNote: () => {
@@ -48,12 +48,15 @@ const useStore = create<
         },
         updateNote: (updates) => {
             // console.log(updates);
+            if (updates.password && updates.password.length === 0) delete updates.password;
+            console.log('updates', updates);
             set((state) => {
                 state.notes.set(state.current!, {
                     ...state.getNote(),
                     ...updates,
                 } as Note);
             });
+            console.log(get());
         },
         changeNote: (note: Note) => {
             set((state) => {
