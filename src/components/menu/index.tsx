@@ -38,7 +38,7 @@ const Menu: FC = () => {
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{context.extendedVisible && <Extended />}</AnimatePresence>
                     <AnimatePresence>{context.listVisible && <ListOfNotes />}</AnimatePresence>
-                    <motion.div className={styles.main}>
+                    <motion.div className={styles.main} layout>
                         <HorizontalButtonGroup>
                             {!store.localLock && (
                                 <Button
