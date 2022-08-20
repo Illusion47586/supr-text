@@ -24,7 +24,7 @@ const Extended = () => {
     const { closeExtended } = useContext(MenuContext);
     const store = useStore();
     const ref = useRef(null);
-    useClickAway(ref, (e: { target: { tagName?: string; id?: string } } & any) => {
+    useClickAway(ref, (e: { target?: { tagName?: string; id?: string } } & any) => {
         if (!(e.target?.tagName === 'svg' || e.target?.id === 'open-config')) closeExtended?.();
     });
 
@@ -48,7 +48,7 @@ const Extended = () => {
     } = useFormik({
         initialValues,
         validate: (_values) => {
-            const _errors = { password: '' };
+            const _errors: { password?: string } = {};
             // console.log(_values);
             if (_values.password && _values.password.length < 5) {
                 _errors.password = 'Minimum length 5 required';
