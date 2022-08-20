@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { Editor, Menu } from '@components';
 import homeLayout, { HomePage } from '@components/home_layout';
 import Loader from '@components/loader';
@@ -10,38 +11,33 @@ import { decrypt, encrypt } from '@utils/scripts/crypt-front';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
+import { useEffectOnce } from 'react-use';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
 const API_URL = 'api/note?id=';
 
-interface AuthInput {
-    password?: string;
-}
-
 const Note: HomePage = () => {
     const router = useRouter();
-    const { code } = router.query;
+    const { code, nokey } = router.query;
     const store = useStore();
 
     const [note, setNote] = useState<Note | undefined>(undefined);
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchNote = async (password?: string) => {
+    const fetchNote = async (_code: string, password?: string) => {
         setIsLoading(true);
         try {
-            const res = api.getNote(code as string, password);
-            // toast.promise(res, { loading: 'Loading', success: 'Fetched!', error: (e) => e });
-            const response = await res;
+            const response = await api.getNote(_code, password);
             if (response.status === 200) {
                 const { data } = response;
                 if (data.encryptContentWhileSending) data.content = decrypt(data.content);
-                console.log(data);
-                store.changeNote(response.data);
-                setNote(response.data);
+                data.password = password;
+                store.changeNote(data);
+                setNote(data);
             } else {
                 setError(response.data.message);
             }
@@ -51,16 +47,19 @@ const Note: HomePage = () => {
         setIsLoading(false);
     };
 
-    const initialValues: AuthInput = { password: '' };
-
-    const { handleSubmit, handleBlur, handleChange, values } = useFormik({
-        initialValues,
-        onSubmit: (_values, { setSubmitting }) => {
+    const { handleSubmit, handleBlur, handleChange, values, setValues } = useFormik({
+        initialValues: { code: '', password: '' },
+        onSubmit: (_values) => {
             setTimeout(async () => {
-                await fetchNote(_values.password);
+                await fetchNote(_values.code, _values.password);
             }, 300);
         },
     });
+
+    useEffect(() => {
+        if (nokey === 'true') fetchNote(code as string);
+        if (code) setValues({ code: code as string, password: '' });
+    }, [code, nokey]);
 
     return note ? (
         <MenuContextProvider>
@@ -83,10 +82,19 @@ const Note: HomePage = () => {
                 </div>
             ) : (
                 <form onSubmit={handleSubmit} {...baseMotionSettings}>
-                    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                    <label htmlFor="password">
-                        Password (This note may or may not require a password)
-                    </label>
+                    <label htmlFor="code">Code (Required)</label>
+                    <input
+                        type="text"
+                        name="code"
+                        id="code"
+                        placeholder={values.code}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.code}
+                        maxLength={5}
+                        required
+                    />
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
                         name="password"
