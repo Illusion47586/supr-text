@@ -14,8 +14,7 @@ axios.interceptors.request.use((req) => {
     if (data && data.encryptContentWhileSending) {
         data.content = encrypt(data.content!);
     }
-    if (data.password && data.length > 0) data.password = encrypt(data.password!);
-    else delete data.password;
+    if (data.password) data.password = encrypt(data.password!);
     req.data = data;
     toast.remove('encrypt');
     return req;
