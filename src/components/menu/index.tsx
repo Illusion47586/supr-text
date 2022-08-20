@@ -45,6 +45,7 @@ const Menu: FC = () => {
                                     title={store.current === 'local' ? 'Share' : undefined}
                                     onClick={() => context.uploadToServer?.()}
                                     icon={store.current === 'local' ? ShareNetwork : UploadSimple}
+                                    label={store.current === 'local' ? 'Share' : 'Update'}
                                 />
                             )}
                             {store.current !== 'local' && (
@@ -52,12 +53,14 @@ const Menu: FC = () => {
                                     title={store.current}
                                     onClick={() => context.copyCodeToClipboard?.()}
                                     icon={Copy}
+                                    label="Copy current note id"
                                 />
                             )}
                             {store.getNote().content.length > 0 && (
                                 <Button
                                     onClick={() => context.copyContentToClipboard?.()}
                                     icon={Clipboard}
+                                    label="Copy current note content"
                                 />
                             )}
                             {!store.localLock && (
@@ -66,9 +69,12 @@ const Menu: FC = () => {
                                     icon={GearSix}
                                     isActive={context.extendedVisible}
                                     id="open-config"
+                                    label="open menu"
                                 />
                             )}
-                            {store.current !== 'local' && <Button onClick={openNew} icon={Plus} />}
+                            {store.current !== 'local' && (
+                                <Button onClick={openNew} icon={Plus} label="open-new-note" />
+                            )}
                         </HorizontalButtonGroup>
                     </motion.div>
                 </motion.div>
