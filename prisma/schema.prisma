@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  email    String
+  userName String? @unique
+  password String
+  notes    Note[]
+}
+
+model Note {
+  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
+  code                       String   @unique
+  title                      String?
+  fileType                   String   @default("text") @map("file_type")
+  createdAt                  DateTime @default(now()) @map("created_at")
+  content                    String
+  encryptContentWhileSending Boolean  @default(false)
+  password                   String?
+  showCreater                Boolean  @default(false) @map("show_creater")
+  remainingCalls             Int?     @default(10) @map("remaining_calls")
+  limitToIP                  String?  @map("limit_to_ip")
+  restriced                  String[] @default([]) // list of emails blocked from accessing this note
+  User                       User?    @relation(fields: [userId], references: [id])
+  userId                     String?  @map("user_id") @db.ObjectId
+  immutable                  Boolean  @default(false)
+}

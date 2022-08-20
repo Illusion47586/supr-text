@@ -1,0 +1,31 @@
+@use '../mixins';
+
+.box {
+    padding: var(--padding-medium);
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 40px #0c0c0ce3;
+    background: #161616;
+    border: 1px solid rgba(#e5e5e5, 10%);
+    position: absolute;
+    @include mixins.center;
+    @include mixins.self_center;
+
+    .loader {
+        transform: translate(5px, 5px);
+    }
+
+    form {
+        max-width: 300px;
+
+        button {
+            &:hover {
+                background-color: rgba(#e5e5e5, 5%);
+            }
+        }
+
+        p {
+            color: #fd3a4e;
+            margin-bottom: 1em;
+        }
+    }
+}

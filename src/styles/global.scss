@@ -1,0 +1,30 @@
+@use './typography';
+@use './constants';
+@use './forms';
+@use './toast';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color-scheme: dark;
+    scroll-behavior: smooth;
+}
+
+html,
+body {
+    padding: 1.25em 2em;
+    font-size: 16px;
+    overflow-x: hidden;
+    background-color: var(--grey-bg);
+    background-image: linear-gradient(rgba(white, 0.02) 0.5px, transparent 0.5px),
+        linear-gradient(to right, rgba(white, 0.02) 0.5px, transparent 0.5px);
+    background-size: 15px 15px;
+    background-position: center;
+    background-repeat: repeat-x repeat-y;
+
+    @media screen and (max-width: 800px) {
+        padding: 1em;
+        padding-top: 0;
+    }
+}

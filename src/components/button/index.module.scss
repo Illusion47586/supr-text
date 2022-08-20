@@ -1,0 +1,71 @@
+@use '../../styles/mixins';
+
+.button {
+    @include mixins.center;
+    transition: all 0.3s;
+    min-width: 150px;
+    padding: 12px 30px;
+    vertical-align: middle;
+    border: none;
+    background: var(--grey-bg);
+    cursor: pointer;
+    border-radius: var(--border-radius-less-round);
+    width: max-content;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(#e5e5e5, 10%);
+    box-shadow: 0 0 40px #0c0c0ce3;
+
+    &.square {
+        padding: 12px 15px;
+        min-width: 0;
+
+        .icon {
+            font-size: 1.5em;
+        }
+    }
+
+    p {
+        font: inherit;
+        font-weight: 500;
+        font-size: 1.3em;
+        margin: 0;
+        color: var(--text-color-primary);
+        z-index: 2;
+        transition: all 0.3s;
+    }
+
+    p + .icon {
+        margin-left: 0.5em;
+    }
+
+    .icon {
+        margin: 0;
+        font-size: 1.45em;
+        color: var(--text-color-primary);
+        z-index: 2;
+        transition: all 0.3s;
+    }
+
+    &.active,
+    &:hover {
+        background: rgba(#e5e5e5, 7%);
+        border: 1px solid rgba(#e5e5e5, 7%);
+    }
+
+    &:not(:last-child) {
+        margin-right: 1.5em;
+    }
+}
+
+.group_horizontal {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+
+    button {
+        &:not(:last-child) {
+            margin-right: 1em;
+        }
+    }
+}

@@ -1,0 +1,23 @@
+.header {
+    width: 100%;
+    h1 {
+        width: fit-content;
+        color: #313131;
+        text-shadow: 0 0 50px black;
+
+        &.gradient {
+            background: radial-gradient(at 27% 37%, #3a8bfd 0, transparent 50%),
+                radial-gradient(at 97% 21%, #9772fe 0, transparent 50%),
+                radial-gradient(at 52% 99%, #fd3a4e 0, transparent 50%),
+                radial-gradient(at 10% 29%, #5afc7d 0, transparent 50%),
+                radial-gradient(at 97% 96%, #e4c795 0, transparent 50%),
+                radial-gradient(at 33% 50%, #8ca8e8 0, transparent 50%),
+                radial-gradient(at 79% 53%, #eea5ba 0, transparent 50%), white;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+    }
+    margin-bottom: 1.5em;
+}

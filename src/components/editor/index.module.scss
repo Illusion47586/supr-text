@@ -1,0 +1,27 @@
+.root {
+    background-color: rgba(#0e0e0e, 0.7) !important;
+    border-radius: 10px;
+    border: 2px solid rgba(#e5e5e5, 10%);
+    box-shadow: 0 0 40px #0c0c0ce3;
+}
+
+.hightlightLine {
+    .lineNumber {
+        user-select: none;
+        opacity: 0.3;
+        position: absolute;
+        left: -0.3em;
+        font-size: 0.8em;
+    }
+}
+
+.textbox {
+    border-radius: 10px;
+    border: none;
+    z-index: 1;
+    &:active,
+    &:focus {
+        border: none;
+        outline: none;
+    }
+}

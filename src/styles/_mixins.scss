@@ -1,0 +1,30 @@
+@mixin glass {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+@mixin center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin self_center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+@mixin black {
+    background-color: aqua !important;
+}
+
+@mixin fullViewport {
+    width: 100vw;
+    height: 100vh;
+}

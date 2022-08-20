@@ -1,0 +1,44 @@
+{
+    "ts-node": {
+        "compilerOptions": {
+            "module": "CommonJS"
+        }
+    },
+    "compilerOptions": {
+        "target": "es5",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "baseUrl": ".",
+        "paths": {
+            "@components/*": ["./src/components/*"],
+            "@components": ["./src/components"],
+            "@styles/*": ["./src/styles/*"],
+            "@styles": ["./src/styles"],
+            "@stories/*": ["./src/stories/*"],
+            "@stories": ["./src/stories"],
+            "@utils/*": ["./utils/*"],
+            "@utils": ["./utils"],
+            "@prisma/*": ["./prisma/*"],
+            "@prisma": ["./prisma"],
+            "@public/*": ["./public/*"],
+            "@public": ["./public"],
+            "@store/*": ["./store/*"],
+            "@store": ["./store"],
+            "@services/*": ["./src/services/*"],
+            "@services": ["./src/services"]
+        },
+        "incremental": true
+    },
+    "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+    "exclude": ["node_modules"]
+}
