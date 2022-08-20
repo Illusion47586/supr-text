@@ -101,7 +101,7 @@ const Extended = () => {
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.password}
-                            minLength={8}
+                            minLength={5}
                         />
                     </>
                 )}
