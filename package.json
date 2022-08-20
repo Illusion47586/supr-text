@@ -14,7 +14,8 @@
         "build-storybook": "build-storybook",
         "prisma:generate": "prisma generate",
         "keygen:dev": "env-cmd -f .env.development.local ts-node keygen.ts abcd",
-        "keygen:prod": "env-cmd -f .env.production.local ts-node keygen.ts abcd"
+        "keygen:prod": "env-cmd -f .env.production.local ts-node keygen.ts abcd",
+        "commit": "cz"
     },
     "dependencies": {
         "@next/bundle-analyzer": "^12.2.5",
