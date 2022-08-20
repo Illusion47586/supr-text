@@ -68,13 +68,7 @@ const Menu: FC = () => {
                                     id="open-config"
                                 />
                             )}
-                            {store.current !== 'local' && (
-                                <Button
-                                    onClick={openNew}
-                                    icon={Plus}
-                                    isActive={context.listVisible}
-                                />
-                            )}
+                            {store.current !== 'local' && <Button onClick={openNew} icon={Plus} />}
                         </HorizontalButtonGroup>
                     </motion.div>
                 </motion.div>

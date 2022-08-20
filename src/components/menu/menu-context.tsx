@@ -91,7 +91,7 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
 
     const copyCodeToClipboard = () => {
         if (store.getNote()?.code) {
-            copyToClipboard(store.current!);
+            copyToClipboard(store.getNote().code!);
             toast('Code copied to your clipboard!');
         }
     };
