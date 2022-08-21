@@ -1,6 +1,7 @@
 import { api } from '@services';
 import useStore from '@store';
 import logger from '@utils/loggers/front';
+import devtool from '@utils/scripts/devtool';
 import { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQuery } from 'react-query';
@@ -39,9 +40,9 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     const [extendedVisible, setExtendedVisible] = useState(false);
     const [listVisible, setListVisible] = useState(false);
 
-    useEffectOnce(() => {
-        if (window.innerWidth < 800) setVisible(false);
-    });
+    // useEffectOnce(() => {
+    //     if (window.innerWidth < 800) setVisible(false);
+    // });
 
     const show = () => setVisible(true);
     const hide = () => setVisible(false);
@@ -99,27 +100,25 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     const uploadToServer = async () => {
         const data = { ...store.getNote() };
         const { code, content } = data;
-        const toastid = `server_contact_${code}`;
         if (data.content === '') {
             toast.error("Content can't be empty!");
             return;
         }
         try {
-            toast.loading(code !== 'local' ? 'Updating' : 'Uploading', { id: toastid });
-            const response =
-                code && code !== 'local'
-                    ? await api.updateNote(code, data)
-                    : await api.uploadNote(data);
+            const condn = code && code !== 'local';
+            const promise = condn ? api.updateNote(code, data) : api.uploadNote(data);
+            toast.promise(promise, {
+                success: `Successfully ${condn ? 'Updated' : 'Uploaded'}`,
+                loading: condn ? 'Updating' : 'Uploading',
+                error: (e) => e.message,
+            });
+            const response = await promise;
             if (response && response.status < 300 && response.status >= 200) {
                 store.changeNote({ ...response.data, content });
-                toast.success(`Successfully ${code !== 'local' ? 'Updated' : 'Uploaded'}`, {
-                    id: toastid,
-                });
             }
         } catch (error) {
             logger.error(error);
         }
-        toast.remove(toastid);
     };
 
     useKey((key) => key.key === '/' && key.altKey, toggleExtended);
