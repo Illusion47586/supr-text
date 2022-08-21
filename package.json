@@ -22,7 +22,6 @@
         "@prisma/client": "^4.2.1",
         "axios": "^0.27.2",
         "bcrypt": "^5.0.1",
-        "crypto": "^1.0.1",
         "cryptr": "^6.0.3",
         "formik": "^2.2.9",
         "framer-motion": "^7.1.0",
