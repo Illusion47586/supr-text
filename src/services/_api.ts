@@ -9,7 +9,7 @@ const axios = axios$1.create({
 });
 
 axios.interceptors.request.use((req) => {
-    console.log(req.url);
+    // console.log(req.url);
     const { data } = req;
     toast.loading('Encrypting...', { id: 'encrypt' });
     if (data) {
@@ -19,13 +19,13 @@ axios.interceptors.request.use((req) => {
         if (data.password) data.password = encrypt(data.password);
     }
     req.data = data;
-    console.log(data);
+    // console.log(data);
     toast.remove('encrypt');
     return req;
 });
 
 axios.interceptors.response.use((response) => {
-    console.log(response);
+    // console.log(response);
     if (response.data && response.data.error) {
         toast.error(response.data.error);
         Promise.reject(response.data.error);

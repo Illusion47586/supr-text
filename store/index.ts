@@ -47,16 +47,13 @@ const useStore = create<
             return notes.get(_current!)!;
         },
         updateNote: (updates) => {
-            // console.log(updates);
             if (updates.password && updates.password.length === 0) delete updates.password;
-            console.log('updates', updates);
             set((state) => {
                 state.notes.set(state.current!, {
                     ...state.getNote(),
                     ...updates,
                 } as Note);
             });
-            console.log(get());
         },
         changeNote: (note: Note) => {
             set((state) => {

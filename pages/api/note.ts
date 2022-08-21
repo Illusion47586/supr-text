@@ -13,7 +13,7 @@ export default withCorsAndLoggerMiddleware()(async function handler(
     res: NextApiResponse,
 ) {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         if (req.method && req.method === 'POST') {
             if (!req.body || !req.body.content)
                 return res.status(400).json({ error: 'No content received' });
@@ -86,7 +86,7 @@ export default withCorsAndLoggerMiddleware()(async function handler(
                 return res.status(404).json({
                     error: `Note ${_id} not found.`,
                 });
-            console.log(req.query);
+            // console.log(req.query);
             if (
                 !prismaUtils.authenticate(response, {
                     password: req.query.password as string,
