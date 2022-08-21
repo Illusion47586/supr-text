@@ -76,7 +76,7 @@ export default withCorsAndLoggerMiddleware()(async function handler(
             return res.status(200).json(final);
         }
         if (req.method && req.method === 'GET') {
-            await deleteExpired();
+            // await deleteExpired();
             if (!req.query.id) throw new Error('Note Id not passed as query');
             const _id = req.query.id as string;
             const response = await prisma.note.findFirst({
@@ -110,7 +110,7 @@ export default withCorsAndLoggerMiddleware()(async function handler(
                     title: true,
                     immutable: true,
                 },
-                data: { remainingCalls: { decrement: 1 } },
+                data: { remainingCalls: { decrement: 0 } },
             });
 
             final.content = cryptr.decrypt(final.content);
