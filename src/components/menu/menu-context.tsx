@@ -2,10 +2,9 @@ import { api } from '@services';
 import useStore from '@store';
 import logger from '@utils/loggers/front';
 import devtool from '@utils/scripts/devtool';
-import { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { createContext, FC, ReactNode, useMemo, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
-import { useCopyToClipboard, useEffectOnce, useKey } from 'react-use';
+import { useCopyToClipboard, useKey } from 'react-use';
 
 interface MenuContextInterface {
     visible: boolean;
@@ -40,10 +39,6 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     const [extendedVisible, setExtendedVisible] = useState(false);
     const [listVisible, setListVisible] = useState(false);
 
-    // useEffectOnce(() => {
-    //     if (window.innerWidth < 800) setVisible(false);
-    // });
-
     const show = () => setVisible(true);
     const hide = () => setVisible(false);
 
@@ -73,12 +68,6 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
         closeList();
         closeExtended();
     };
-
-    // useEffect(() => {
-    //     console.log('Extended', extendedVisible);
-    //     console.log('List', listVisible);
-    //     console.log('.');
-    // }, [extendedVisible, listVisible]);
 
     const [, copyToClipboard] = useCopyToClipboard();
     const store = useStore();

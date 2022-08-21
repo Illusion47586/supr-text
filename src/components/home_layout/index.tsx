@@ -1,7 +1,7 @@
-import { MenuContextProvider } from '@components/menu/menu-context';
 import { NextPage } from 'next/types';
-import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 import { Toaster, ToastPosition } from 'react-hot-toast';
+import { useEffectOnce } from 'react-use';
 
 import { Header } from '..';
 import styles from './index.module.scss';
@@ -31,14 +31,10 @@ const toastPostionMobile: ToastPositionType = {
 const BaseLayout: React.FC<Props> = ({ children }) => {
     const [toastPosition, setToastPosition] = useState<ToastPositionType>(toastPostionMobile);
 
-    useEffect(() => {
-        if (window.innerWidth > 800) setToastPosition(toastPostionDesktop);
+    useEffectOnce(() => {
+        if (window && window.innerWidth > 800) setToastPosition(toastPostionDesktop);
         else setToastPosition(toastPostionMobile);
-
-        return () => {
-            setToastPosition(toastPostionMobile);
-        };
-    }, [window, window.innerWidth]);
+    });
 
     return (
         <div className={styles.page}>

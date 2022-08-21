@@ -1,20 +1,7 @@
 import useStore from '@store';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import {
-    Check,
-    Clipboard,
-    Copy,
-    FilePlus,
-    GearSix,
-    List,
-    Plus,
-    ShareNetwork,
-    Upload,
-    UploadSimple,
-} from 'phosphor-react';
-import { FC, useContext, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { Clipboard, Copy, GearSix, Plus, ShareNetwork, UploadSimple } from 'phosphor-react';
+import { FC, useContext } from 'react';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
 import Button, { HorizontalButtonGroup } from '../button';
@@ -26,7 +13,6 @@ import { MenuContext } from './menu-context';
 const Menu: FC = () => {
     const context = useContext(MenuContext);
     const store = useStore();
-    const router = useRouter();
 
     const openNew = () => {
         window.open('/', '_blank');
@@ -72,7 +58,7 @@ const Menu: FC = () => {
                                     label="open menu"
                                 />
                             )}
-                            {store.current !== 'local' && (
+                            {store.current !== 'local' && window && (
                                 <Button onClick={openNew} icon={Plus} label="open-new-note" />
                             )}
                         </HorizontalButtonGroup>
