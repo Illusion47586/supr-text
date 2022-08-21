@@ -1,6 +1,8 @@
 .header {
     width: 100%;
+    overflow: auto;
     h1 {
+        margin-bottom: 0;
         width: fit-content;
         color: #313131;
         text-shadow: 0 0 50px black;
