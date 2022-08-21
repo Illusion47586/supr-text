@@ -18,6 +18,7 @@ class CustomDocument extends Document {
         return (
             <Html>
                 <Head>
+                    <link rel="preconnect" href="https://api.fontshare.com" />
                     <link
                         href="https://api.fontshare.com/v2/css?f[]=satoshi@1&f[]=jet-brains-mono@1&display=swap"
                         rel="stylesheet"
