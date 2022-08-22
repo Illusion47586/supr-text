@@ -35,6 +35,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                         site_name: 'Supr-Text',
                         description: 'A simple safe note sharing application',
                     }}
+                    twitter={{
+                        cardType: 'app',
+                    }}
                 />
                 <Component {...pageProps} />
             </Hydrate>
