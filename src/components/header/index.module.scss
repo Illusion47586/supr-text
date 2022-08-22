@@ -2,6 +2,9 @@
     width: 100%;
     overflow: auto;
     h1 {
+        @media screen and (max-width: 800px) {
+            margin-top: 0.3em;
+        }
         margin-bottom: 0;
         width: fit-content;
         color: #313131;

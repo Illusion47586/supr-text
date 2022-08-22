@@ -9,13 +9,9 @@ import { useCopyToClipboard, useKey } from 'react-use';
 interface MenuContextInterface {
     visible: boolean;
     extendedVisible: boolean;
-    listVisible: boolean;
     openExtended?: () => void;
     closeExtended?: () => void;
     toggleExtended?: () => void;
-    openList?: () => void;
-    closeList?: () => void;
-    toggleList?: () => void;
     closeAll?: () => void;
     show?: () => void;
     hide?: () => void;
@@ -27,7 +23,6 @@ interface MenuContextInterface {
 const MenuContext = createContext<MenuContextInterface>({
     visible: true,
     extendedVisible: false,
-    listVisible: false,
 });
 
 interface MenuContextProps {
@@ -37,13 +32,11 @@ interface MenuContextProps {
 const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     const [visible, setVisible] = useState(true);
     const [extendedVisible, setExtendedVisible] = useState(false);
-    const [listVisible, setListVisible] = useState(false);
 
     const show = () => setVisible(true);
     const hide = () => setVisible(false);
 
     const openExtended = () => {
-        setListVisible(false);
         setExtendedVisible(true);
     };
     const closeExtended = () => {
@@ -54,18 +47,7 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
         else openExtended();
     };
 
-    const openList = () => {
-        setExtendedVisible(false);
-        setListVisible(true);
-    };
-    const closeList = () => setListVisible(false);
-    const toggleList = () => {
-        if (listVisible) closeList();
-        else openList();
-    };
-
     const closeAll = () => {
-        closeList();
         closeExtended();
     };
 
@@ -81,8 +63,10 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
 
     const copyCodeToClipboard = () => {
         if (store.getNote()?.code) {
-            copyToClipboard(store.getNote().code!);
-            toast('Code copied to your clipboard!');
+            let url = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${store.getNote().code!}`;
+            if (!store.getNote().password) url += '?nokey=true';
+            copyToClipboard(url);
+            toast('URL copied to your clipboard!');
         }
     };
 
@@ -111,7 +95,6 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     };
 
     useKey((key) => key.key === '/' && key.altKey, toggleExtended);
-    useKey((key) => key.key === 'o' && key.altKey, toggleList);
     useKey((key) => key.key === 'c' && key.altKey, copyContentToClipboard);
     useKey((key) => key.key === 'u' && key.altKey, uploadToServer);
 
@@ -119,13 +102,9 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
         return {
             visible,
             extendedVisible,
-            listVisible,
             openExtended,
             closeExtended,
             toggleExtended,
-            openList,
-            closeList,
-            toggleList,
             closeAll,
             show,
             hide,
