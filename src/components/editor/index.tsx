@@ -23,12 +23,13 @@ const Editor: React.FC<Props> = (props) => {
         if (store.getNote()?.content) setCode(store.getNote()?.content);
         setAllowDebounce(true);
 
-        toast(
-            `Currently notes expire in 24 hours from creating, or 25 reads, whichever comes first :)\nAs of now this note is left with ${
-                store.getNote()?.remainingCalls
-            } calls.`,
-            { duration: 6000, position: 'top-center' },
-        );
+        if (store.current && store.current !== 'local')
+            toast(
+                `Currently notes expire in 24 hours from creating, or 25 reads, whichever comes first :)\nAs of now this note is left with ${
+                    store.getNote()?.remainingCalls
+                } calls.`,
+                { duration: 6000, position: 'top-center' },
+            );
     });
 
     const [, cancel] = useDebounce(
