@@ -64,7 +64,7 @@ const MenuContextProvider: FC<MenuContextProps> = ({ children }) => {
     const copyCodeToClipboard = () => {
         if (store.getNote()?.code) {
             let url = `${process.env.NEXT_PUBLIC_VERCEL_URL}/${store.getNote().code!}`;
-            if (!store.getNote().password) url += '?nokey=true';
+            if (!store.getNote().password || store.getNote().password === '') url += '?nokey=true';
             copyToClipboard(url);
             toast('URL copied to your clipboard!');
         }
