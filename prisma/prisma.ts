@@ -7,8 +7,8 @@ import RandomString from 'randomstring';
 const prisma = new PrismaClient();
 
 const deleteExpired = async () => {
-    const THREE_HOURS_IN_MS = 1.08e7;
-    const limit = new Date().getMilliseconds() - THREE_HOURS_IN_MS;
+    const ONE_DAY_IN_MS = 8.64e7;
+    const limit = new Date().getMilliseconds() - ONE_DAY_IN_MS;
     const date = new Date();
     date.setMilliseconds(limit);
     await prisma.note.deleteMany({

@@ -1,32 +1,18 @@
 import useStore from '@store';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
-import {
-    Check,
-    Clipboard,
-    Copy,
-    FilePlus,
-    GearSix,
-    List,
-    Plus,
-    ShareNetwork,
-    Upload,
-    UploadSimple,
-} from 'phosphor-react';
-import { FC, useContext, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { NextSeo } from 'next-seo';
+import { Clipboard, Copy, GearSix, Plus, ShareNetwork, UploadSimple } from 'phosphor-react';
+import { FC, useContext } from 'react';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
 import Button, { HorizontalButtonGroup } from '../button';
 import Extended from './extended';
 import styles from './index.module.scss';
-import ListOfNotes from './list';
 import { MenuContext } from './menu-context';
 
 const Menu: FC = () => {
     const context = useContext(MenuContext);
     const store = useStore();
-    const router = useRouter();
 
     const openNew = () => {
         window.open('/', '_blank');
@@ -34,10 +20,15 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
+            {store.current !== 'local' && (
+                <NextSeo
+                    key="seo-overwrite"
+                    title={`${store.getNote().title ?? store.current} | Supr-Text`}
+                />
+            )}
             {context.visible && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{context.extendedVisible && <Extended />}</AnimatePresence>
-                    <AnimatePresence>{context.listVisible && <ListOfNotes />}</AnimatePresence>
                     <motion.div className={styles.main} layout>
                         <HorizontalButtonGroup>
                             {!store.localLock && (
@@ -53,7 +44,7 @@ const Menu: FC = () => {
                                     title={store.current}
                                     onClick={() => context.copyCodeToClipboard?.()}
                                     icon={Copy}
-                                    label="Copy current note id"
+                                    label="Copy current note url"
                                 />
                             )}
                             {store.getNote().content.length > 0 && (
@@ -72,8 +63,8 @@ const Menu: FC = () => {
                                     label="open menu"
                                 />
                             )}
-                            {store.current !== 'local' && (
-                                <Button onClick={openNew} icon={Plus} label="open-new-note" />
+                            {store.current !== 'local' && window && (
+                                <Button onClick={openNew} icon={Plus} label="open new note" />
                             )}
                         </HorizontalButtonGroup>
                     </motion.div>

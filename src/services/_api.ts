@@ -8,19 +8,19 @@ const axios = axios$1.create({
     },
 });
 
-axios.interceptors.request.use((req) => {
+axios.interceptors.request.use(async (req) => {
     // console.log(req.url);
     const { data } = req;
-    toast.loading('Encrypting...', { id: 'encrypt' });
     if (data) {
+        const id = toast.loading('Encrypting...');
         if (data.encryptContentWhileSending) {
             data.content = encrypt(data.content!);
         }
         if (data.password) data.password = encrypt(data.password);
+        toast.dismiss(id);
     }
     req.data = data;
     // console.log(data);
-    toast.remove('encrypt');
     return req;
 });
 
@@ -33,7 +33,7 @@ axios.interceptors.response.use((response) => {
     return response;
 });
 
-const getNote = (code: string, password?: string) => {
+const getNote = async (code: string, password?: string) => {
     const params: { id: string; password?: string } = { id: code };
     if (password) params.password = encrypt(password);
     return axios.get('/api/note', { params });
