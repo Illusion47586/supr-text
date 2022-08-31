@@ -1,23 +1,32 @@
 /* eslint-disable react/jsx-key */
-import { MenuContext } from '@components/menu/menu-context';
+import Loader from '@components/loader';
+import { useStore } from '@nanostores/react';
+import { ApplicationState, useNoteStore } from '@state';
+import dynamic from 'next/dynamic';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
-import React, { useContext, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import toast from 'react-hot-toast';
 import PrismEditor from 'react-simple-code-editor';
 import { useDebounce, useEffectOnce } from 'react-use';
-import useStore from 'store';
 
 import editorTheme from './code_style';
 import styles from './index.module.scss';
+
+const DynamicMarkdownRenderer = dynamic(() => import('@components/markdown'), {
+    suspense: true,
+    loading: () => <Loader />,
+});
 
 interface Props {
     isNotEditable?: boolean;
 }
 
 const Editor: React.FC<Props> = (props) => {
-    const store = useStore();
+    const store = useNoteStore();
     const [code, setCode] = useState<string>('');
     const [allowDebounce, setAllowDebounce] = useState(false);
+
+    const $currentView = useStore(ApplicationState.currentView);
 
     useEffectOnce(() => {
         if (store.getNote()?.content) setCode(store.getNote()?.content);
@@ -32,7 +41,7 @@ const Editor: React.FC<Props> = (props) => {
             );
     });
 
-    const [, cancel] = useDebounce(
+    useDebounce(
         () => {
             if (allowDebounce) store.updateNote({ content: code });
         },
@@ -51,7 +60,7 @@ const Editor: React.FC<Props> = (props) => {
             code={c}
             language={(store.getNote()?.fileType as Language) ?? 'markdown'}
         >
-            {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            {({ tokens, getLineProps, getTokenProps }) => (
                 <>
                     {tokens.map((line, i) => (
                         <div
@@ -71,7 +80,11 @@ const Editor: React.FC<Props> = (props) => {
         </Highlight>
     );
 
-    return (
+    return $currentView === 'Markdown' ? (
+        <Suspense fallback="Loading...">
+            <DynamicMarkdownRenderer content={store.getNote().content} />
+        </Suspense>
+    ) : (
         <PrismEditor
             value={code}
             onValueChange={onValueChange}

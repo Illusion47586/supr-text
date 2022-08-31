@@ -26,7 +26,7 @@ const generateNewNote = (): Note => ({
 
 type StoreSet = (fn: (draft: WritableDraft<NotesState>) => void) => void;
 
-const useStore = create<
+const useNoteStore = create<
     NotesState,
     [['zustand/immer', NotesState], ['zustand/persist', NotesState]]
 >(
@@ -85,4 +85,4 @@ const useStore = create<
     // ),
 );
 
-export default useStore;
+export default useNoteStore;
