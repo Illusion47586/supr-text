@@ -1,10 +1,10 @@
+import { useNoteStore } from '@state';
 import React, { useEffect, useState } from 'react';
-import useStore from 'store';
 
 import styles from './index.module.scss';
 
 export const Header: React.FC = () => {
-    const store = useStore();
+    const store = useNoteStore();
     const [header, setHeader] = useState('Supr-Text');
 
     useEffect(() => {

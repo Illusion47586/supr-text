@@ -1,19 +1,12 @@
 import prisma, { deleteExpired } from '@prisma/prisma';
 import prismaUtils from '@prisma/utils';
-import withCorsAndLoggerMiddleware from '@utils/api_middlewares/with/cors_and_logger';
 import GenericError from '@utils/errors/generic_error';
-import NoteError from '@utils/errors/note_error';
 import logger from '@utils/loggers/server';
 import { cryptr } from '@utils/scripts/crypt';
-import { decrypt } from '@utils/scripts/crypt-front';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default withCorsAndLoggerMiddleware()(async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse,
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
-        // console.log(req.body);
         if (req.method && req.method === 'POST') {
             if (!req.body || !req.body.content)
                 return res.status(400).json({ error: 'No content received' });
@@ -123,4 +116,4 @@ export default withCorsAndLoggerMiddleware()(async function handler(
         if (error instanceof GenericError) return res.status(error.code).send(error.message);
         return res.status(500).send(error.message);
     }
-});
+}

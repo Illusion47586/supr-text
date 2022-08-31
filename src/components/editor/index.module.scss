@@ -7,6 +7,7 @@
     @media screen and (max-width: 500px) {
         margin-bottom: 5.5em;
     }
+    height: 100%;
 }
 
 .hightlightLine {
@@ -28,4 +29,10 @@
         border: none;
         outline: none;
     }
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
 }
