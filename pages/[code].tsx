@@ -22,23 +22,24 @@ const Note: HomePage = () => {
     const [error, setError] = useState();
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchNote = async (_code: string, password?: string) => {
+    const fetchNote = async (_code: string, _password?: string) => {
         setIsLoading(true);
         try {
-            const response = await api.getNote(_code, password);
+            const response = await api.getNote(_code, _password);
             if (response.status === 200) {
                 const { data } = response;
                 if (data.encryptContentWhileSending) data.content = decrypt(data.content);
-                data.password = password;
+                data.password = _password;
                 store.changeNote(data);
                 setNote(data);
             } else {
-                setError(response.data.message);
+                setError(response.data.error);
             }
         } catch (_error: { message: string } & any) {
             setError(_error.message ?? _error);
+        } finally {
+            setIsLoading(false);
         }
-        setIsLoading(false);
     };
 
     const { handleSubmit, handleBlur, handleChange, values, setValues } = useFormik({

@@ -1,15 +1,10 @@
 import prisma, { deleteExpired } from '@prisma/prisma';
 import prismaUtils from '@prisma/utils';
-import withCorsAndLoggerMiddleware from '@utils/api_middlewares/with/cors_and_logger';
 import GenericError from '@utils/errors/generic_error';
-import NoteError from '@utils/errors/note_error';
 import logger from '@utils/loggers/server';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default withCorsAndLoggerMiddleware('cors')(async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse,
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
         if (req.method && req.method === 'GET') {
             await deleteExpired();
@@ -48,4 +43,4 @@ export default withCorsAndLoggerMiddleware('cors')(async function handler(
         if (error instanceof GenericError) return res.status(error.code).send(error.message);
         return res.status(500).send(error.message);
     }
-});
+}
