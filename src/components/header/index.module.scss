@@ -1,6 +1,12 @@
 .header {
     width: 100%;
+    overflow: auto;
     h1 {
+        @media screen and (max-width: 800px) {
+            margin-top: 0.3em;
+        }
+
+        margin-bottom: 0;
         width: fit-content;
         color: #313131;
         text-shadow: 0 0 50px black;
@@ -17,10 +23,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             color: transparent;
-        }
-
-        @media screen and (min-width: 800px) {
-            margin-top: 0;
         }
     }
     margin-bottom: 1.5em;

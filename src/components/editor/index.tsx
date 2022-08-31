@@ -5,6 +5,7 @@ import { ApplicationState, useNoteStore } from '@state';
 import dynamic from 'next/dynamic';
 import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import React, { Suspense, useState } from 'react';
+import toast from 'react-hot-toast';
 import PrismEditor from 'react-simple-code-editor';
 import { useDebounce, useEffectOnce } from 'react-use';
 
@@ -30,6 +31,14 @@ const Editor: React.FC<Props> = (props) => {
     useEffectOnce(() => {
         if (store.getNote()?.content) setCode(store.getNote()?.content);
         setAllowDebounce(true);
+
+        if (store.current && store.current !== 'local')
+            toast(
+                `Currently notes expire in 24 hours from creating, or 25 reads, whichever comes first :)\nAs of now this note is left with ${
+                    store.getNote()?.remainingCalls
+                } calls.`,
+                { duration: 6000, position: 'top-center' },
+            );
     });
 
     useDebounce(

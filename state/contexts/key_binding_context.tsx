@@ -30,7 +30,6 @@ const KeyBindingContextProvider: FC<KeyBindingContextProps> = ({ children }) => 
     const store = useStore();
 
     useEffectOnce(() => {
-        if (window.innerWidth < 800) isMenuVisible.set(false);
         if (store.getNote().fileType === 'markdown') currentView.set('Markdown');
     });
 
@@ -45,8 +44,9 @@ const KeyBindingContextProvider: FC<KeyBindingContextProps> = ({ children }) => 
 
     const copyCodeToClipboard = () => {
         if (store.getNote()?.code) {
-            copyToClipboard(store.getNote().code!);
-            toast('Code copied to your clipboard!');
+            const url = `${process.env.NEXT_PUBLIC_URL}/${store.getNote().code}?nokey=true`;
+            copyToClipboard(url);
+            toast('URL copied to your clipboard!');
         }
     };
 

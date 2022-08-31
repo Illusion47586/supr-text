@@ -3,6 +3,10 @@
     border-radius: 10px;
     border: 2px solid rgba(#e5e5e5, 10%);
     box-shadow: 0 0 40px #0c0c0ce3;
+
+    @media screen and (max-width: 500px) {
+        margin-bottom: 5.5em;
+    }
     height: 100%;
     overflow-y: auto;
 }

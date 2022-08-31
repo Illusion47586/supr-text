@@ -11,7 +11,6 @@
     scroll-behavior: smooth;
 }
 
-html,
 body {
     padding: 1.25em 2em;
     font-size: 16px;
@@ -24,7 +23,14 @@ body {
     background-repeat: repeat-x repeat-y;
 
     @media screen and (max-width: 800px) {
-        padding: 1em;
+        padding: 2em;
+        padding-top: 0;
+        background-image: linear-gradient(rgba(white, 0.02) 2px, transparent 2px),
+            linear-gradient(to right, rgba(white, 0.02) 2px, transparent 2px);
+    }
+
+    @media screen and (max-width: 500px) {
+        padding: 1.5em;
         padding-top: 0;
     }
 }

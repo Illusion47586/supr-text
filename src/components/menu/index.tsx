@@ -1,22 +1,17 @@
 import { useStore } from '@nanostores/react';
 import { KeyBindingContext } from '@state';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import {
     ArrowFatDown,
-    Check,
     Clipboard,
     Copy,
-    FilePlus,
     GearSix,
-    List,
     Plus,
     ShareNetwork,
-    Upload,
     UploadSimple,
 } from 'phosphor-react';
-import { FC, useContext, useEffect } from 'react';
-import toast from 'react-hot-toast';
+import { FC, useContext } from 'react';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 import useNoteStore from 'state/stores/note';
 import {
@@ -48,6 +43,12 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
+            {store.current !== 'local' && (
+                <NextSeo
+                    key="seo-overwrite"
+                    title={`${store.getNote().title ?? store.current} | Supr-Text`}
+                />
+            )}
             {$isMenuVisible && true && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{$isExtendedMenuVisible && <Extended />}</AnimatePresence>
@@ -67,7 +68,7 @@ const Menu: FC = () => {
                                     title={store.current}
                                     onClick={() => context.copyCodeToClipboard?.()}
                                     icon={Copy}
-                                    label="Copy current note id"
+                                    label="Copy current note url"
                                 />
                             )}
                             {store.getNote().fileType === 'markdown' && (
@@ -94,8 +95,8 @@ const Menu: FC = () => {
                                     label="open menu"
                                 />
                             )}
-                            {store.current !== 'local' && (
-                                <Button onClick={openNew} icon={Plus} label="open-new-note" />
+                            {store.current !== 'local' && window && (
+                                <Button onClick={openNew} icon={Plus} label="open new note" />
                             )}
                         </HorizontalButtonGroup>
                     </motion.div>

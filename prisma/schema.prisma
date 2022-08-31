@@ -25,10 +25,10 @@ model Note {
   fileType                   String   @default("text") @map("file_type")
   createdAt                  DateTime @default(now()) @map("created_at")
   content                    String
-  encryptContentWhileSending Boolean  @default(false)
+  encryptContentWhileSending Boolean  @default(false) @map("encrypt_content_while_sending")
   password                   String?
   showCreater                Boolean  @default(false) @map("show_creater")
-  remainingCalls             Int?     @default(10) @map("remaining_calls")
+  remainingCalls             Int?     @default(25) @map("remaining_calls")
   limitToIP                  String?  @map("limit_to_ip")
   restriced                  String[] @default([]) // list of emails blocked from accessing this note
   User                       User?    @relation(fields: [userId], references: [id])
