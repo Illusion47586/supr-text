@@ -1,14 +1,12 @@
 import { api } from '@services';
 import logger from '@utils/loggers/front';
-import { createContext, FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { createContext, FC, ReactNode, useMemo } from 'react';
 import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
-import { useCopyToClipboard, useEffectOnce, useKey, useToggle } from 'react-use';
+import { useCopyToClipboard, useEffectOnce, useKey } from 'react-use';
 import useStore from 'state/stores/note';
 
 import {
     currentView,
-    isMenuVisible,
     toggleCurrentView,
     toggleExtendedMenuVisibility,
     toggleListVisibility,

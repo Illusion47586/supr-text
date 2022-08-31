@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { ApplicationState } from '@state';
+import { ApplicationState, useNoteStore } from '@state';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Check } from 'phosphor-react';
@@ -8,7 +8,6 @@ import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useClickAway, useKey } from 'react-use';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
-import useStore from 'state/stores/note';
 
 import styles from './index.module.scss';
 
@@ -21,7 +20,7 @@ interface ExtendedFormValues {
 }
 
 const Extended = () => {
-    const store = useStore();
+    const store = useNoteStore();
     const ref = useRef(null);
 
     const closeExtended = () => {
