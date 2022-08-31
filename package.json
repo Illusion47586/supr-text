@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "next build",
+        "build": "npm run prisma:generate && next build",
         "start": "next start",
         "build:analyze": "cross-env ANALYZE=true next build",
         "lint": "eslint **/*.{js,jsx,ts,tsx}",
