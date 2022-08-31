@@ -32,8 +32,8 @@
             "@prisma": ["./prisma"],
             "@public/*": ["./public/*"],
             "@public": ["./public"],
-            "@store/*": ["./store/*"],
-            "@store": ["./store"],
+            "@state": ["state"],
+            "@state/*": ["state/*"],
             "@services/*": ["./src/services/*"],
             "@services": ["./src/services"]
         },

@@ -3,26 +3,20 @@ import { Editor, Menu } from '@components';
 import homeLayout, { HomePage } from '@components/home_layout';
 import Loader from '@components/loader';
 import MarkDownRenderer from '@components/markdown';
-import { MenuContextProvider } from '@components/menu/menu-context';
 import { api } from '@services';
-import useStore from '@store';
+import { KeyBindingContextProvider, useNoteStore } from '@state';
 import styles from '@styles/pages/note_fetch.module.scss';
-import { decrypt, encrypt } from '@utils/scripts/crypt-front';
-import axios from 'axios';
+import { decrypt } from '@utils/scripts/crypt-front';
 import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-import { useQuery } from 'react-query';
-import { useEffectOnce } from 'react-use';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
-
-const API_URL = 'api/note?id=';
 
 const Note: HomePage = () => {
     const router = useRouter();
     const { code, nokey } = router.query;
-    const store = useStore();
+    const store = useNoteStore();
 
     const [note, setNote] = useState<Note | undefined>(undefined);
     const [error, setError] = useState();
@@ -62,18 +56,12 @@ const Note: HomePage = () => {
     }, [code, nokey]);
 
     return note ? (
-        <MenuContextProvider>
-            <div>
-                {note.fileType === 'markdown' ? (
-                    <MarkDownRenderer />
-                ) : (
-                    <>
-                        <Editor isNotEditable={store.localLock} />
-                        <Menu />
-                    </>
-                )}
-            </div>
-        </MenuContextProvider>
+        <KeyBindingContextProvider>
+            <motion.div {...baseMotionSettings}>
+                <Editor isNotEditable={store.localLock} />
+                <Menu />
+            </motion.div>
+        </KeyBindingContextProvider>
     ) : (
         <div className={styles.box}>
             {isLoading && !error ? (

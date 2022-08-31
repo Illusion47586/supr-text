@@ -1,17 +1,16 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import useStore from '@store';
-import { encrypt } from '@utils/scripts/crypt-front';
+import { ApplicationState } from '@state';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Check } from 'phosphor-react';
 import { defaultProps, Language } from 'prism-react-renderer';
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useClickAway, useKey } from 'react-use';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
+import useStore from 'state/stores/note';
 
 import styles from './index.module.scss';
-import { MenuContext } from './menu-context';
 
 interface ExtendedFormValues {
     title?: string;
@@ -22,11 +21,15 @@ interface ExtendedFormValues {
 }
 
 const Extended = () => {
-    const { closeExtended } = useContext(MenuContext);
     const store = useStore();
     const ref = useRef(null);
+
+    const closeExtended = () => {
+        ApplicationState.isExtendedMenuVisible.set(false);
+    };
+
     useClickAway(ref, (e: { target?: { tagName?: string; id?: string } } & any) => {
-        if (!(e.target?.tagName === 'svg' || e.target?.id === 'open-config')) closeExtended?.();
+        if (!(e.target?.tagName === 'svg' || e.target?.id === 'open-config')) closeExtended();
     });
 
     const initialValues: ExtendedFormValues = {
@@ -37,20 +40,10 @@ const Extended = () => {
         password: store.getNote()?.password ?? '',
     };
 
-    const {
-        handleSubmit,
-        handleBlur,
-        handleChange,
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        submitForm,
-    } = useFormik({
+    const { handleSubmit, handleBlur, handleChange, values, submitForm } = useFormik({
         initialValues,
         validate: (_values) => {
             const _errors: { password?: string } = {};
-            // console.log(_values);
             if (_values.password && _values.password.length < 5) {
                 _errors.password = 'Minimum length 5 required';
                 toast.error('Password should be minimum 5 characters long!', { id: 'pass_len' });
@@ -61,7 +54,7 @@ const Extended = () => {
             setTimeout(() => {
                 store.updateNote(_values);
                 toast.success('Config updated!');
-                closeExtended?.();
+                closeExtended();
                 setSubmitting(false);
             }, 300);
         },

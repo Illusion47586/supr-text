@@ -1,4 +1,3 @@
-import { MenuContextProvider } from '@components/menu/menu-context';
 import { NextPage } from 'next/types';
 import React, { ReactElement, ReactNode } from 'react';
 import { Toaster } from 'react-hot-toast';

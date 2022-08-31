@@ -1,7 +1,9 @@
-import useStore from '@store';
+import { useStore } from '@nanostores/react';
+import { KeyBindingContext } from '@state';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import {
+    ArrowFatDown,
     Check,
     Clipboard,
     Copy,
@@ -16,17 +18,29 @@ import {
 import { FC, useContext, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
+import useNoteStore from 'state/stores/note';
+import {
+    currentView,
+    isExtendedMenuVisible,
+    isListVisible,
+    isMenuVisible,
+    toggleCurrentView,
+    toggleExtendedMenuVisibility,
+} from 'state/stores/toggles';
 
 import Button, { HorizontalButtonGroup } from '../button';
 import Extended from './extended';
 import styles from './index.module.scss';
 import ListOfNotes from './list';
-import { MenuContext } from './menu-context';
 
 const Menu: FC = () => {
-    const context = useContext(MenuContext);
-    const store = useStore();
-    const router = useRouter();
+    const context = useContext(KeyBindingContext);
+    const store = useNoteStore();
+
+    const $isMenuVisible = useStore(isMenuVisible);
+    const $isExtendedMenuVisible = useStore(isExtendedMenuVisible);
+    const $isListVisible = useStore(isListVisible);
+    const $currentView = useStore(currentView);
 
     const openNew = () => {
         window.open('/', '_blank');
@@ -34,10 +48,10 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
-            {context.visible && (
+            {$isMenuVisible && true && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
-                    <AnimatePresence>{context.extendedVisible && <Extended />}</AnimatePresence>
-                    <AnimatePresence>{context.listVisible && <ListOfNotes />}</AnimatePresence>
+                    <AnimatePresence>{$isExtendedMenuVisible && <Extended />}</AnimatePresence>
+                    <AnimatePresence>{$isListVisible && <ListOfNotes />}</AnimatePresence>
                     <motion.div className={styles.main} layout>
                         <HorizontalButtonGroup>
                             {!store.localLock && (
@@ -56,6 +70,14 @@ const Menu: FC = () => {
                                     label="Copy current note id"
                                 />
                             )}
+                            {store.getNote().fileType === 'markdown' && (
+                                <Button
+                                    onClick={() => toggleCurrentView()}
+                                    icon={ArrowFatDown}
+                                    label="Toggle Markdown"
+                                    isActive={$currentView === 'Markdown'}
+                                />
+                            )}
                             {store.getNote().content.length > 0 && (
                                 <Button
                                     onClick={() => context.copyContentToClipboard?.()}
@@ -65,9 +87,9 @@ const Menu: FC = () => {
                             )}
                             {!store.localLock && (
                                 <Button
-                                    onClick={() => context.toggleExtended?.()}
+                                    onClick={() => toggleExtendedMenuVisibility()}
                                     icon={GearSix}
-                                    isActive={context.extendedVisible}
+                                    isActive={$isExtendedMenuVisible}
                                     id="open-config"
                                     label="open menu"
                                 />
