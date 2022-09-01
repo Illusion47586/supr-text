@@ -1,6 +1,6 @@
 import Button from './button';
-import Editor from './editor';
 import Header from './header';
+import Loader from './loader';
 import Menu from './menu';
 
-export { Button, Editor, Header, Menu };
+export { Button, Header, Loader, Menu };

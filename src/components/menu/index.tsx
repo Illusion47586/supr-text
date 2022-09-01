@@ -1,5 +1,4 @@
 import { useStore } from '@nanostores/react';
-import { KeyBindingContext } from '@state';
 import { AnimatePresence, motion } from 'framer-motion';
 import { NextSeo } from 'next-seo';
 import {
@@ -11,9 +10,10 @@ import {
     ShareNetwork,
     UploadSimple,
 } from 'phosphor-react';
-import { FC, useContext } from 'react';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
-import useNoteStore from 'state/stores/note';
+import { FC, useContext, useState } from 'react';
+import { useEffectOnce } from 'react-use';
+import { KeyBindingContext } from 'src/state';
+import useNoteStore from 'src/state/stores/note';
 import {
     currentView,
     isExtendedMenuVisible,
@@ -21,7 +21,8 @@ import {
     isMenuVisible,
     toggleCurrentView,
     toggleExtendedMenuVisibility,
-} from 'state/stores/toggles';
+} from 'src/state/stores/toggles';
+import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
 import Button, { HorizontalButtonGroup } from '../button';
 import Extended from './extended';
@@ -31,6 +32,11 @@ import ListOfNotes from './list';
 const Menu: FC = () => {
     const context = useContext(KeyBindingContext);
     const store = useNoteStore();
+    const [title, setTitle] = useState('Supr-Text');
+
+    useEffectOnce(() => {
+        setTitle(`${store.getNote().title ?? store.getNote().code ?? store.current} | Supr-Text`);
+    });
 
     const $isMenuVisible = useStore(isMenuVisible);
     const $isExtendedMenuVisible = useStore(isExtendedMenuVisible);
@@ -43,12 +49,7 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
-            {store.current !== 'local' && (
-                <NextSeo
-                    key="seo-overwrite"
-                    title={`${store.getNote().title ?? store.current} | Supr-Text`}
-                />
-            )}
+            {store.current !== 'local' && <NextSeo key="seo-overwrite" title={title} />}
             {$isMenuVisible && true && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{$isExtendedMenuVisible && <Extended />}</AnimatePresence>
@@ -71,14 +72,15 @@ const Menu: FC = () => {
                                     label="Copy current note url"
                                 />
                             )}
-                            {store.getNote().fileType === 'markdown' && (
-                                <Button
-                                    onClick={() => toggleCurrentView()}
-                                    icon={ArrowFatDown}
-                                    label="Toggle Markdown"
-                                    isActive={$currentView === 'Markdown'}
-                                />
-                            )}
+                            {store.getNote().fileType === 'markdown' &&
+                                store.getNote().content.length > 0 && (
+                                    <Button
+                                        onClick={() => toggleCurrentView()}
+                                        icon={ArrowFatDown}
+                                        label="Toggle Markdown"
+                                        isActive={$currentView === 'Markdown'}
+                                    />
+                                )}
                             {store.getNote().content.length > 0 && (
                                 <Button
                                     onClick={() => context.copyContentToClipboard?.()}

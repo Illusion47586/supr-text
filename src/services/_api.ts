@@ -12,12 +12,12 @@ axios.interceptors.request.use(async (req) => {
     // console.log(req.url);
     const { data } = req;
     if (data) {
-        const id = toast.loading('Encrypting...');
+        // const id = toast.loading('Encrypting...');
         if (data.encryptContentWhileSending) {
             data.content = encrypt(data.content!);
         }
         if (data.password) data.password = encrypt(data.password);
-        toast.dismiss(id);
+        // toast.dismiss(id);
     }
     req.data = data;
     // console.log(data);
