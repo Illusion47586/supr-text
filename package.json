@@ -4,7 +4,8 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build": "npm run prisma:generate && next build",
+        "build:vercel": "npm run prisma:push && next build",
+        "build": "npm run prisma:push:dev && next build",
         "start": "next start",
         "build:analyze": "cross-env ANALYZE=true npm run build",
         "lint": "eslint **/*.{js,jsx,ts,tsx}",
@@ -12,7 +13,11 @@
         "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "prisma:generate": "prisma generate",
+        "prisma:push": "prisma db push",
+        "prisma:generate:dev": "env-cmd -f .env.development.local prisma generate",
+        "prisma:push:dev": "env-cmd -f .env.development.local prisma db push",
+        "prisma:generate:prod": "env-cmd -f .env.production.local prisma generate",
+        "prisma:push:prod": "env-cmd -f .env.production.local prisma db push",
         "keygen:dev": "env-cmd -f .env.development.local ts-node keygen.ts abcd",
         "keygen:prod": "env-cmd -f .env.production.local ts-node keygen.ts abcd",
         "commit": "cz"

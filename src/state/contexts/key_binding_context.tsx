@@ -42,7 +42,11 @@ const KeyBindingContextProvider: FC<KeyBindingContextProps> = ({ children }) => 
 
     const copyCodeToClipboard = () => {
         if (store.getNote()?.code) {
-            const url = `${process.env.NEXT_PUBLIC_URL}/${store.getNote().code}?nokey=true`;
+            let url = `${process.env.NEXT_PUBLIC_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL}/${
+                store.getNote().code
+            }`;
+            if (!store.getNote().password || store.getNote().password?.length === 0)
+                url += '?nokey=true';
             copyToClipboard(url);
             toast('URL copied to your clipboard!');
         }

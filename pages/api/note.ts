@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (req.method && req.method === 'PATCH') {
             if (!req.query.id) return res.status(400).json({ error: 'No ID received' });
             const note = await prisma.note.findFirst({
-                select: { immutable: true, password: true, limitToIP: true, restriced: true },
+                select: { immutable: true, password: true, limitToIP: true },
                 where: { code: req.query.id as string },
             });
             if (!note)
@@ -37,10 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (note.immutable) {
                 return res.status(400).json({ error: 'Note is immutable.' });
             }
-            if (note.restriced.length > 0)
-                return res.status(401).json({
-                    error: 'You need to login in order to attempt to access this note.',
-                });
             if (
                 !prismaUtils.authenticate(note, {
                     password: req.body.password as string,
