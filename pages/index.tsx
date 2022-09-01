@@ -1,4 +1,5 @@
-import { Editor, Menu } from '@components';
+import { Menu } from '@components';
+import Editor from '@components/editor';
 import homeLayout, { HomePage } from '@components/home_layout';
 import { KeyBindingContextProvider } from '@state';
 import React from 'react';

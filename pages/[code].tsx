@@ -1,17 +1,23 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Editor, Menu } from '@components';
+import { Loader, Menu } from '@components';
 import homeLayout, { HomePage } from '@components/home_layout';
-import Loader from '@components/loader';
-import MarkDownRenderer from '@components/markdown';
 import { api } from '@services';
 import { KeyBindingContextProvider, useNoteStore } from '@state';
 import styles from '@styles/pages/note_fetch.module.scss';
 import { decrypt } from '@utils/scripts/crypt-front';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
+
+const DynamicEditor = dynamic(
+    () => {
+        return import('@components/editor');
+    },
+    { loading: () => <Loader /> },
+);
 
 const Note: HomePage = () => {
     const router = useRouter();
@@ -59,7 +65,9 @@ const Note: HomePage = () => {
     return note ? (
         <KeyBindingContextProvider>
             <motion.div {...baseMotionSettings}>
-                <Editor isNotEditable={store.localLock} />
+                <Suspense fallback={<Loader />}>
+                    <DynamicEditor isNotEditable={store.localLock} />
+                </Suspense>
                 <Menu />
             </motion.div>
         </KeyBindingContextProvider>

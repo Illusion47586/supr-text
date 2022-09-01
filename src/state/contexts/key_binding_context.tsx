@@ -3,7 +3,7 @@ import logger from '@utils/loggers/front';
 import { createContext, FC, ReactNode, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard, useEffectOnce, useKey } from 'react-use';
-import useStore from 'state/stores/note';
+import useStore from 'src/state/stores/note';
 
 import {
     currentView,
@@ -51,30 +51,28 @@ const KeyBindingContextProvider: FC<KeyBindingContextProps> = ({ children }) => 
     const uploadToServer = async () => {
         const data = { ...store.getNote() };
         const { code, content } = data;
-        const toastid = `server_contact_${code}`;
         if (data.content === '') {
             toast.error("Content can't be empty!");
             return;
         }
-        try {
-            toast.loading(code !== 'local' ? 'Updating' : 'Uploading', { id: toastid });
-            const response =
-                code && code !== 'local'
-                    ? await api.updateNote(code, data)
-                    : await api.uploadNote(data);
-            if (response && response.status < 300 && response.status >= 200) {
-                store.changeNote({ ...response.data, content });
-                toast.success(`Successfully ${code !== 'local' ? 'Updated' : 'Uploaded'}`, {
-                    id: toastid,
-                });
-            }
-        } catch (error) {
-            logger.error(error);
+        const response =
+            code && code !== 'local' ? api.updateNote(code, data) : api.uploadNote(data);
+
+        toast.promise(response, {
+            success: `Successfully ${code !== 'local' ? 'Updated' : 'Uploaded'}`,
+            loading: `${code !== 'local' ? 'Updating' : 'Uploading'}`,
+            error: (e) => e.message,
+        });
+
+        const res = await response;
+        if (res && res.status < 300 && res.status >= 200) {
+            store.changeNote({ ...res.data, content });
+        } else {
+            logger.error(res.data);
         }
-        toast.remove(toastid);
     };
 
-    useKey((key) => key.key === '/' && key.altKey, toggleExtendedMenuVisibility);
+    useKey((key) => key.key === 'k' && key.altKey, toggleExtendedMenuVisibility);
     useKey((key) => key.key === 'o' && key.altKey, toggleListVisibility);
     useKey((key) => key.key === 'c' && key.altKey, copyContentToClipboard);
     useKey((key) => key.key === 'u' && key.altKey, uploadToServer);
