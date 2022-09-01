@@ -2,36 +2,34 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model User {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  email    String
+  id       String  @id @default(cuid())
+  email    String  @unique
   userName String? @unique
   password String
-  notes    Note[]
 }
 
 model Note {
-  id                         String   @id @default(auto()) @map("_id") @db.ObjectId
-  code                       String   @unique
+  code                       String   @id @unique
   title                      String?
   fileType                   String   @default("text") @map("file_type")
   createdAt                  DateTime @default(now()) @map("created_at")
-  content                    String
+  content                    String   @db.LongText
   encryptContentWhileSending Boolean  @default(false) @map("encrypt_content_while_sending")
-  password                   String?
+  password                   String?  @db.LongText
   showCreater                Boolean  @default(false) @map("show_creater")
   remainingCalls             Int?     @default(25) @map("remaining_calls")
   limitToIP                  String?  @map("limit_to_ip")
-  restriced                  String[] @default([]) // list of emails blocked from accessing this note
-  User                       User?    @relation(fields: [userId], references: [id])
-  userId                     String?  @map("user_id") @db.ObjectId
   immutable                  Boolean  @default(false)
+  userId                     String?
 }

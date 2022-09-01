@@ -27,7 +27,6 @@ const purifyNoteWithoutOwner = (data: any) => {
     const updatedData = { ...data };
     updatedData.content = cryptr.decrypt(data.content);
     delete updatedData.password;
-    delete updatedData.id;
     delete updatedData.restriced;
     delete updatedData.User;
     delete updatedData.userId;
