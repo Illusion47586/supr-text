@@ -22,7 +22,7 @@ model User {
 model Note {
   code                       String   @id @unique
   title                      String?
-  fileType                   String   @default("text") @map("file_type")
+  fileType                   String   @default("markdown") @map("file_type")
   createdAt                  DateTime @default(now()) @map("created_at")
   content                    String   @db.LongText
   encryptContentWhileSending Boolean  @default(false) @map("encrypt_content_while_sending")

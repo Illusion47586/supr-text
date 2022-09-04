@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev",
-        "build:vercel": "npm run prisma:push && next build",
+        "build:vercel": "npm run prisma:generate && next build",
         "build": "npm run prisma:push:dev && next build",
         "start": "next start",
         "build:analyze": "cross-env ANALYZE=true next build",
@@ -14,6 +14,7 @@
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
         "prisma:push": "prisma db push",
+        "prisma:generate": "prisma generate",
         "prisma:generate:dev": "env-cmd -f .env.development.local prisma generate",
         "prisma:push:dev": "env-cmd -f .env.development.local prisma db push",
         "prisma:generate:prod": "env-cmd -f .env.production.local prisma generate",
