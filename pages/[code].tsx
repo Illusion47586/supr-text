@@ -4,7 +4,6 @@ import homeLayout, { HomePage } from '@components/home_layout';
 import { api } from '@services';
 import { KeyBindingContextProvider, useNoteStore } from '@state';
 import styles from '@styles/pages/note_fetch.module.scss';
-import { decrypt } from '@utils/scripts/crypt-front';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
@@ -34,7 +33,10 @@ const Note: HomePage = () => {
             const response = await api.getNote(_code, _password);
             if (response.status === 200) {
                 const { data } = response;
-                if (data.encryptContentWhileSending) data.content = decrypt(data.content);
+                if (data.encryptContentWhileSending) {
+                    const { decrypt } = await import('@utils/scripts/crypt-front');
+                    data.content = decrypt(data.content);
+                }
                 data.password = _password;
                 store.changeNote(data);
                 setNote(data);

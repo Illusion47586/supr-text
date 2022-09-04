@@ -1,6 +1,5 @@
 import { compare, cryptr } from '@utils/scripts/crypt';
 import { decrypt } from '@utils/scripts/crypt-front';
-import Cryptr from 'cryptr';
 
 const authenticate = (data: any, security?: { password?: string; ip?: string }) => {
     try {
