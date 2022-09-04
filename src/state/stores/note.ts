@@ -1,7 +1,5 @@
 /* eslint-disable no-param-reassign */
-import logger from '@utils/loggers/front';
 import { WritableDraft } from 'immer/dist/internal';
-import RandomString from 'randomstring';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
