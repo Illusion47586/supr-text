@@ -3,13 +3,13 @@ import { ApplicationState, useNoteStore } from '@state';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import { Check } from 'phosphor-react';
-import { defaultProps, Language } from 'prism-react-renderer';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useClickAway, useKey } from 'react-use';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
 import styles from './index.module.scss';
+import Language from './languages';
 
 interface ExtendedFormValues {
     title?: string;
@@ -34,7 +34,7 @@ const Extended = () => {
     const initialValues: ExtendedFormValues = {
         encryptContentWhileSending: store.getNote()?.encryptContentWhileSending ?? false,
         immutable: store.getNote()?.immutable ?? false,
-        fileType: store.getNote()?.fileType ?? 'text',
+        fileType: store.getNote()?.fileType ?? 'markdown',
         title: store.getNote()?.title ?? '',
         password: store.getNote()?.password ?? '',
     };
@@ -105,17 +105,11 @@ const Extended = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                 >
-                    {Object.keys(defaultProps.Prism.languages)
-                        .filter(
-                            (lang) =>
-                                typeof defaultProps.Prism.languages[lang as Language] === 'object',
-                        )
-                        .sort()
-                        .map((lang) => (
-                            <option value={lang} key={lang}>
-                                {lang}
-                            </option>
-                        ))}
+                    {Language.sort().map((lang) => (
+                        <option value={lang} key={lang}>
+                            {lang}
+                        </option>
+                    ))}
                 </select>
                 <label>
                     <span>Immutable, no edits allowed once sent to the server.</span>

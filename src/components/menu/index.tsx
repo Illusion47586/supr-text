@@ -72,7 +72,8 @@ const Menu: FC = () => {
                                     label="Copy current note url"
                                 />
                             )}
-                            {store.getNote().fileType === 'markdown' &&
+                            {(!store.getNote().fileType ||
+                                store.getNote().fileType === 'markdown') &&
                                 store.getNote().content.length > 0 && (
                                     <Button
                                         onClick={() => toggleCurrentView()}
