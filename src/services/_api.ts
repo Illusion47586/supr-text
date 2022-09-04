@@ -1,4 +1,3 @@
-import { encrypt } from '@utils/scripts/crypt-front';
 import axios$1 from 'axios';
 import toast from 'react-hot-toast';
 
@@ -9,23 +8,20 @@ const axios = axios$1.create({
 });
 
 axios.interceptors.request.use(async (req) => {
-    // console.log(req.url);
     const { data } = req;
-    if (data) {
-        // const id = toast.loading('Encrypting...');
+    if (data && (data.encryptContentWhileSending || data.password)) {
+        const { encrypt } = await import('@utils/scripts/crypt-front');
         if (data.encryptContentWhileSending) {
             data.content = encrypt(data.content!);
         }
         if (data.password) data.password = encrypt(data.password);
-        // toast.dismiss(id);
     }
     req.data = data;
-    // console.log(data);
+    console.log(data);
     return req;
 });
 
 axios.interceptors.response.use((response) => {
-    // console.log(response);
     if (response.data && response.data.error) {
         toast.error(response.data.error);
         Promise.reject(response.data.error);
@@ -35,7 +31,10 @@ axios.interceptors.response.use((response) => {
 
 const getNote = async (code: string, password?: string) => {
     const params: { id: string; password?: string } = { id: code };
-    if (password) params.password = encrypt(password);
+    if (password) {
+        const { encrypt } = await import('@utils/scripts/crypt-front');
+        params.password = encrypt(password);
+    }
     return axios.get('/api/note', { params });
 };
 
