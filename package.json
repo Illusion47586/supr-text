@@ -35,7 +35,7 @@
         "immer": "^9.0.15",
         "markdown-loader": "^8.0.0",
         "nanostores": "^0.6.0",
-        "next": "^12.2.5",
+        "next": "^12.3.0",
         "next-api-middleware": "^2.0.1",
         "next-compose-plugins": "^2.2.1",
         "next-seo": "^5.5.0",
