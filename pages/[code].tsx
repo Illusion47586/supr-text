@@ -2,7 +2,7 @@
 import { Loader, Menu } from '@components';
 import homeLayout, { HomePage } from '@components/home_layout';
 import { api } from '@services';
-import { KeyBindingContextProvider, useNoteStore } from '@state';
+import { useNoteStore } from '@state';
 import styles from '@styles/pages/note_fetch.module.scss';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
@@ -65,14 +65,12 @@ const Note: HomePage = () => {
     }, [code, nokey]);
 
     return note ? (
-        <KeyBindingContextProvider>
-            <motion.div {...baseMotionSettings}>
-                <Suspense fallback={<Loader />}>
-                    <DynamicEditor isNotEditable={store.localLock} />
-                </Suspense>
-                <Menu />
-            </motion.div>
-        </KeyBindingContextProvider>
+        <motion.div {...baseMotionSettings}>
+            <Suspense fallback={<Loader />}>
+                <DynamicEditor isNotEditable={store.localLock} />
+            </Suspense>
+            <Menu />
+        </motion.div>
     ) : (
         <div className={styles.box}>
             {isLoading && !error ? (
