@@ -10,11 +10,32 @@ const axios = axios$1.create({
 axios.interceptors.request.use(async (req) => {
     const { data } = req;
     if (data && (data.encryptContentWhileSending || data.password)) {
-        const { encrypt } = await import('@utils/scripts/crypt-front');
-        if (data.encryptContentWhileSending) {
-            data.content = encrypt(data.content!);
-        }
-        if (data.password) data.password = encrypt(data.password);
+        const promise = new Promise(function (resolve, reject) {
+            try {
+                import('@utils/scripts/crypt-front')
+                    .then(({ encrypt }) => {
+                        if (data.encryptContentWhileSending) {
+                            data.content = encrypt(data.content!);
+                        }
+                        if (data.password) data.password = encrypt(data.password);
+                        resolve(undefined);
+                    })
+                    .catch((error) => {
+                        reject(error);
+                    });
+            } catch (error) {
+                reject(error);
+            }
+        });
+        toast.promise(
+            promise,
+            {
+                loading: 'Encrypting...',
+                success: 'Encrypted',
+                error: 'Encryption Failed',
+            },
+            { id: 'encryption' },
+        );
     }
     req.data = data;
     console.log(data);
@@ -23,8 +44,7 @@ axios.interceptors.request.use(async (req) => {
 
 axios.interceptors.response.use((response) => {
     if (response.data && response.data.error) {
-        toast.error(response.data.error);
-        Promise.reject(response.data.error);
+        return Promise.reject(response.data.error);
     }
     return response;
 });
