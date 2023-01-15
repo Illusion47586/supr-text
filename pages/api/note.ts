@@ -1,9 +1,11 @@
 import prisma, { deleteExpired } from '@prisma/prisma';
 import prismaUtils from '@prisma/utils';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import GenericError from '@utils/errors/generic_error';
 import logger from '@utils/loggers/server';
 import { cryptr } from '@utils/scripts/crypt';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
