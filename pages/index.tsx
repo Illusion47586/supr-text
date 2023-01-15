@@ -4,7 +4,7 @@ import homeLayout, { HomePage } from '@components/home_layout';
 import { KeyBindingContextProvider } from '@state';
 import React from 'react';
 
-const Home: HomePage = (props) => {
+const Home: HomePage = () => {
     return (
         <KeyBindingContextProvider>
             <Editor />
