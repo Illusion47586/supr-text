@@ -39,7 +39,7 @@ specifiers:
   eslint-plugin-simple-import-sort: ^7.0.0
   formik: ^2.2.9
   framer-motion: ^7.10.3
-  husky: ^8.0.3
+  husky: ^8.0.0
   immer: ^9.0.17
   lint-staged: ^13.1.0
   markdown-loader: ^8.0.0

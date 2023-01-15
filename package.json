@@ -22,7 +22,8 @@
         "prisma:push:prod": "env-cmd -f .env.production.local prisma db push",
         "keygen:dev": "env-cmd -f .env.development.local ts-node keygen.ts abcd",
         "keygen:prod": "env-cmd -f .env.production.local ts-node keygen.ts abcd",
-        "commit": "cz"
+        "commit": "cz",
+        "prepare": "husky install"
     },
     "dependencies": {
         "@nanostores/react": "^0.3.0",
@@ -89,7 +90,7 @@
         "eslint-plugin-react": "^7.32.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-simple-import-sort": "^7.0.0",
-        "husky": "^8.0.3",
+        "husky": "^8.0.0",
         "lint-staged": "^13.1.0",
         "prettier": "^2.8.3",
         "prisma": "^4.8.1",
@@ -99,13 +100,8 @@
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
-            "pnpm run lint -- --quiet --fix"
+            "pnpm lint:fix"
         ]
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
     },
     "config": {
         "commitizen": {

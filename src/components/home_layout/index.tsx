@@ -54,7 +54,7 @@ const BaseLayout: React.FC<Props> = ({ children }) => {
     );
 };
 
-type HomePage = NextPage & {
+type HomePage<T = Record<string, never>> = NextPage<T> & {
     getLayout?: (page: JSX.Element) => ReactElement;
 };
 
