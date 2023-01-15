@@ -20,6 +20,7 @@ specifiers:
   '@typescript-eslint/parser': ^5.33.0
   axios: ^0.27.2
   bcrypt: ^5.0.1
+  commitizen: ^4.2.6
   cross-env: ^7.0.3
   cryptr: ^6.0.3
   cz-conventional-changelog: ^3.3.0
@@ -118,6 +119,7 @@ devDependencies:
   '@types/winston': 2.4.4
   '@typescript-eslint/eslint-plugin': 5.33.0_njno5y7ry2l2lcmiu4tywxkwnq
   '@typescript-eslint/parser': 5.33.0_qugx7qdu5zevzvxaiqyxfiwquq
+  commitizen: 4.2.6
   cross-env: 7.0.3
   cz-conventional-changelog: 3.3.0
   env-cmd: 10.1.0
@@ -5368,8 +5370,8 @@ packages:
     engines: {node: ^12.20.0 || >=14}
     dev: true
 
-  /commitizen/4.2.5:
-    resolution: {integrity: sha512-9sXju8Qrz1B4Tw7kC5KhnvwYQN88qs2zbiB8oyMsnXZyJ24PPGiNM3nHr73d32dnE3i8VJEXddBFIbOgYSEXtQ==}
+  /commitizen/4.2.6:
+    resolution: {integrity: sha512-RyTM+EiD9GO01DJUn9MRRAet3XUHGfoUZoksLfr+1ym1Xt2q5EYJs9Fg2BtKSb5Mo53i0BtMBmWMHQXVlZ/L9w==}
     engines: {node: '>= 12'}
     hasBin: true
     dependencies:
@@ -5759,7 +5761,7 @@ packages:
     engines: {node: '>= 10'}
     dependencies:
       chalk: 2.4.2
-      commitizen: 4.2.5
+      commitizen: 4.2.6
       conventional-commit-types: 3.0.0
       lodash.map: 4.6.0
       longest: 2.0.1

@@ -73,6 +73,7 @@
         "@types/winston": "^2.4.4",
         "@typescript-eslint/eslint-plugin": "^5.33.0",
         "@typescript-eslint/parser": "^5.33.0",
+        "commitizen": "^4.2.6",
         "cross-env": "^7.0.3",
         "cz-conventional-changelog": "^3.3.0",
         "env-cmd": "^10.1.0",
