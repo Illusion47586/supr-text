@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
 import { Loader, Menu } from '@components';
@@ -25,9 +24,13 @@ const DynamicEditor = dynamic(
     { loading: () => <Loader /> },
 );
 
-const Note: HomePage = () => {
-    const router = useRouter();
-    const { code, nokey } = router.query;
+type Props = {
+    code?: string;
+    noKey: boolean;
+};
+
+const Note: HomePage<Props> = ({ code, noKey }: Props) => {
+    console.log(code, noKey);
     const store = useNoteStore();
 
     const [note, setNote] = useState<Note | undefined>(undefined);
@@ -67,11 +70,13 @@ const Note: HomePage = () => {
     });
 
     useEffect(() => {
-        if (nokey === 'true') fetchNote(code as string);
-        if (code) setValues({ code: code as string, password: '' });
-    }, [code, nokey]);
+        if (code) {
+            if (noKey) fetchNote(code);
+            setValues({ code, password: '' });
+        }
+    }, [code, noKey]);
 
-    const title = store.getNote().title ?? store.getNote().code ?? store.current;
+    const title = store.getNote().title ?? store.getNote().code ?? store.current ?? code;
 
     return (
         <>
@@ -139,5 +144,11 @@ const Note: HomePage = () => {
 };
 
 Note.getLayout = homeLayout;
+
+Note.getInitialProps = ({ query }) => {
+    const { code, nokey } = query;
+    const noKey = nokey === 'true';
+    return { code: code as string, noKey };
+};
 
 export default Note;
