@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { NextSeo } from 'next-seo';
 import React, { Suspense, useEffect, useState } from 'react';
 import { baseMotionSettings } from 'src/utils/base_motion_settings';
 
@@ -64,52 +65,70 @@ const Note: HomePage = () => {
         if (code) setValues({ code: code as string, password: '' });
     }, [code, nokey]);
 
-    return note ? (
-        <KeyBindingContextProvider>
-            <motion.div {...baseMotionSettings}>
-                <Suspense fallback={<Loader />}>
-                    <DynamicEditor isNotEditable={store.localLock} />
-                </Suspense>
-                <Menu />
-            </motion.div>
-        </KeyBindingContextProvider>
-    ) : (
-        <div className={styles.box}>
-            {isLoading && !error ? (
-                <div className={styles.loader}>
-                    <Loader />
-                </div>
+    const title = store.getNote().title ?? store.getNote().code ?? store.current;
+
+    return (
+        <>
+            <NextSeo
+                key="seo-overwrite"
+                title={`${title ? `${title} | ` : ''}Supr-Text`}
+                openGraph={{
+                    images: [
+                        {
+                            url: `${process.env.NEXT_PUBLIC_URL}/api/og?code=${code}`,
+                            secureUrl: `${process.env.NEXT_PUBLIC_URL}/api/og?code=${code}`,
+                        },
+                    ],
+                }}
+            />
+            {note ? (
+                <KeyBindingContextProvider>
+                    <motion.div {...baseMotionSettings}>
+                        <Suspense fallback={<Loader />}>
+                            <DynamicEditor isNotEditable={store.localLock} />
+                        </Suspense>
+                        <Menu />
+                    </motion.div>
+                </KeyBindingContextProvider>
             ) : (
-                <form onSubmit={handleSubmit} {...baseMotionSettings}>
-                    <label htmlFor="code">Code (Required)</label>
-                    <input
-                        type="text"
-                        name="code"
-                        id="code"
-                        placeholder={values.code}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.code}
-                        maxLength={5}
-                        required
-                    />
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder="Leave blank if not needed"
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        value={values.password}
-                    />
-                    {error && <p>{error}</p>}
-                    <button type="submit">
-                        <span>Submit</span>
-                    </button>
-                </form>
+                <div className={styles.box}>
+                    {isLoading && !error ? (
+                        <div className={styles.loader}>
+                            <Loader />
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} {...baseMotionSettings}>
+                            <label htmlFor="code">Code (Required)</label>
+                            <input
+                                type="text"
+                                name="code"
+                                id="code"
+                                placeholder={values.code}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.code}
+                                maxLength={5}
+                                required
+                            />
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                name="password"
+                                id="password"
+                                placeholder="Leave blank if not needed"
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.password}
+                            />
+                            {error && <p>{error}</p>}
+                            <button type="submit">
+                                <span>Submit</span>
+                            </button>
+                        </form>
+                    )}
+                </div>
             )}
-        </div>
+        </>
     );
 };
 

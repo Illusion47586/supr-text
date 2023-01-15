@@ -1,6 +1,5 @@
 import { useStore } from '@nanostores/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { NextSeo } from 'next-seo';
 import {
     ArrowFatDown,
     Clipboard,
@@ -10,8 +9,7 @@ import {
     ShareNetwork,
     UploadSimple,
 } from 'phosphor-react';
-import { FC, useContext, useState } from 'react';
-import { useEffectOnce } from 'react-use';
+import { FC, useContext } from 'react';
 import { KeyBindingContext } from 'src/state';
 import useNoteStore from 'src/state/stores/note';
 import {
@@ -32,11 +30,6 @@ import ListOfNotes from './list';
 const Menu: FC = () => {
     const context = useContext(KeyBindingContext);
     const store = useNoteStore();
-    const [title, setTitle] = useState('Supr-Text');
-
-    useEffectOnce(() => {
-        setTitle(`${store.getNote().title ?? store.getNote().code ?? store.current} | Supr-Text`);
-    });
 
     const $isMenuVisible = useStore(isMenuVisible);
     const $isExtendedMenuVisible = useStore(isExtendedMenuVisible);
@@ -49,7 +42,6 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
-            {store.current !== 'local' && <NextSeo key="seo-overwrite" title={title} />}
             {$isMenuVisible && true && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{$isExtendedMenuVisible && <Extended />}</AnimatePresence>
