@@ -26,6 +26,8 @@
             "@styles": ["./src/styles"],
             "@stories/*": ["./src/stories/*"],
             "@stories": ["./src/stories"],
+            "@fe-utils/*": ["./src/utils/*"],
+            "@fe-utils": ["./src/utils"],
             "@utils/*": ["./utils/*"],
             "@utils": ["./utils"],
             "@prisma/*": ["./prisma/*"],

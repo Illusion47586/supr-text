@@ -1,16 +1,22 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { Loader, Menu } from '@components';
-import homeLayout, { HomePage } from '@components/home_layout';
-import { api } from '@services';
-import { KeyBindingContextProvider, useNoteStore } from '@state';
-import styles from '@styles/pages/note_fetch.module.scss';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { motion } from 'framer-motion';
+
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
-import React, { Suspense, useEffect, useState } from 'react';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
+
+import { Loader, Menu } from '@components';
+import homeLayout, { HomePage } from '@components/home_layout';
+
+import styles from '@styles/pages/note_fetch.module.scss';
+
+import { api } from '@services';
+
+import { KeyBindingContextProvider, useNoteStore } from '@state';
+
+import { baseMotionSettings } from '@fe-utils/base_motion_settings';
 
 const DynamicEditor = dynamic(
     () => {

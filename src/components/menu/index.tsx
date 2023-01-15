@@ -1,3 +1,4 @@
+import { FC, useContext } from 'react';
 import { useStore } from '@nanostores/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import {
@@ -9,9 +10,9 @@ import {
     ShareNetwork,
     UploadSimple,
 } from 'phosphor-react';
-import { FC, useContext } from 'react';
-import { KeyBindingContext } from 'src/state';
-import useNoteStore from 'src/state/stores/note';
+
+import { KeyBindingContext } from '@state';
+import useNoteStore from '@state/stores/note';
 import {
     currentView,
     isExtendedMenuVisible,
@@ -19,10 +20,12 @@ import {
     isMenuVisible,
     toggleCurrentView,
     toggleExtendedMenuVisibility,
-} from 'src/state/stores/toggles';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
+} from '@state/stores/toggles';
+
+import { baseMotionSettings } from '@fe-utils/base_motion_settings';
 
 import Button, { HorizontalButtonGroup } from '../button';
+
 import Extended from './extended';
 import styles from './index.module.scss';
 import ListOfNotes from './list';

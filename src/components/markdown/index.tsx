@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
-import editorTheme from '@components/editor/code_style';
-import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import React from 'react';
 import ReactMarkdown, { Options } from 'react-markdown';
+import Highlight, { defaultProps, Language } from 'prism-react-renderer';
 import remarkGfm from 'remark-gfm';
+
+import editorTheme from '@components/editor/code_style';
 
 import styles from './index.module.scss';
 

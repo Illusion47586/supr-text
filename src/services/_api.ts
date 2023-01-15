@@ -1,5 +1,5 @@
-import axios$1 from 'axios';
 import toast from 'react-hot-toast';
+import axios$1 from 'axios';
 
 const axios = axios$1.create({
     validateStatus(status) {

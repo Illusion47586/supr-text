@@ -1,12 +1,13 @@
-import '@styles/global.scss';
-
-import { enableMapSet } from 'immer';
-import { AppProps } from 'next/app';
-import { NextPage } from 'next/types';
-import { DefaultSeo } from 'next-seo';
 import React, { ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
+import { enableMapSet } from 'immer';
+
+import { AppProps } from 'next/app';
+import { NextPage } from 'next/types';
+import { DefaultSeo } from 'next-seo';
+
+import '@styles/global.scss';
 
 enableMapSet();
 

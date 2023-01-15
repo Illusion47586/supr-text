@@ -1,16 +1,18 @@
-import { api } from '@services';
-import logger from '@utils/loggers/front';
 import { createContext, FC, ReactNode, useMemo } from 'react';
 import toast from 'react-hot-toast';
 import { useCopyToClipboard, useEffectOnce, useKey } from 'react-use';
-import useStore from 'src/state/stores/note';
 
+import { api } from '@services';
+
+import useStore from '@state/stores/note';
 import {
     currentView,
     toggleCurrentView,
     toggleExtendedMenuVisibility,
     toggleListVisibility,
-} from '../stores/toggles';
+} from '@state/stores/toggles';
+
+import logger from '@utils/loggers/front';
 
 interface KeyBindingContextInterface {
     copyContentToClipboard?: () => void;
