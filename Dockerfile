@@ -1,15 +1,17 @@
 FROM node:18.7-alpine
 
+RUN curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=7 sh -
+
 WORKDIR /opt/app
 
 ENV NODE_ENV development
 
 COPY package*.json ./
 
-RUN npm ci 
+RUN pnpm i 
 
 COPY . /opt/app
 
-RUN npm install --include=dev && npm run build
+RUN pnpm i && pnpm build
 
-CMD [ "npm", "start" ]
+CMD [ "pnpm", "start" ]

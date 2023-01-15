@@ -3,9 +3,10 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
+        "preinstall": "npx only-allow pnpm",
         "dev": "next dev",
-        "build:vercel": "npm run prisma:generate && next build",
-        "build": "npm run prisma:push:dev && next build",
+        "build:vercel": "pnpm run prisma:generate && next build",
+        "build": "pnpm run prisma:push:dev && next build",
         "start": "next start",
         "build:analyze": "cross-env ANALYZE=true next build",
         "lint": "eslint **/*.{js,jsx,ts,tsx}",
@@ -96,7 +97,7 @@
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [
-            "npm run lint -- --quiet --fix"
+            "pnpm run lint -- --quiet --fix"
         ]
     },
     "husky": {
