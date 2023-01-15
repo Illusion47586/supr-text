@@ -4,7 +4,7 @@ module.exports = {
         es2021: true,
         node: true,
     },
-    plugins: ['simple-import-sort', 'import', 'react', '@typescript-eslint'],
+    plugins: ['import', 'react', '@typescript-eslint', 'simple-import-sort'],
     extends: [
         'airbnb',
         'eslint:recommended',
@@ -49,7 +49,35 @@ module.exports = {
                 '.js|.ts': 'never',
             },
         ],
-        'simple-import-sort/imports': 'error',
+        'simple-import-sort/imports': [
+            'error',
+            {
+                groups: [
+                    // Packages `react` related packages come first.
+                    ['^react', '^@?\\w'],
+                    // Packages `next` related packages come first.
+                    ['^next', '^@?\\w'],
+                    // Components
+                    ['^@components', '^(/.*|$)'],
+                    // Styles
+                    ['^@styles', '^(/.*|$)'],
+                    // Public Assets
+                    ['^@public', '^(/.*|$)'],
+                    // Services
+                    ['^@services', '^(/.*|$)'],
+                    // State
+                    ['^@state', '^(/.*|$)'],
+                    // Utils
+                    ['^(@utils|@fe-utils)', '^(/.*|$)'],
+                    // Side effect imports.
+                    ['^\\u0000'],
+                    // Parent imports. Put `..` last.
+                    ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+                    // Other relative imports. Put same-folder imports and `.` last.
+                    ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+                ],
+            },
+        ],
         'simple-import-sort/exports': 'error',
         'import/first': 'error',
         'import/newline-after-import': 'error',

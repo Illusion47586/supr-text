@@ -1,8 +1,10 @@
-import { ApplicationState } from '@state';
-import { motion } from 'framer-motion';
 import { useRef } from 'react';
 import { useClickAway, useKey } from 'react-use';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
+import { motion } from 'framer-motion';
+
+import { ApplicationState } from '@state';
+
+import { baseMotionSettings } from '@fe-utils/base_motion_settings';
 
 import styles from './index.module.scss';
 

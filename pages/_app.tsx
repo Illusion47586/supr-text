@@ -1,12 +1,13 @@
-import '@styles/global.scss';
-
-import { enableMapSet } from 'immer';
-import { AppProps } from 'next/app';
-import { NextPage } from 'next/types';
-import { DefaultSeo } from 'next-seo';
 import React, { ReactElement } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Hydrate } from 'react-query/hydration';
+import { enableMapSet } from 'immer';
+
+import { AppProps } from 'next/app';
+import { NextPage } from 'next/types';
+import { DefaultSeo } from 'next-seo';
+
+import '@styles/global.scss';
 
 enableMapSet();
 
@@ -31,9 +32,15 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout): JSX.Element {
                     description="A simple safe note sharing application"
                     openGraph={{
                         type: 'webapp',
-                        url: process.env.NEXT_PUBLIC_VERCEL_URL,
+                        url: process.env.NEXT_PUBLIC_URL,
                         site_name: 'Supr-Text',
                         description: 'A simple safe note sharing application',
+                        images: [
+                            {
+                                url: `${process.env.NEXT_PUBLIC_URL}/api/og`,
+                                secureUrl: `${process.env.NEXT_PUBLIC_URL}/api/og`,
+                            },
+                        ],
                     }}
                     twitter={{
                         cardType: 'app',

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNoteStore } from 'src/state';
+
+import { useNoteStore } from '@state';
 
 import styles from './index.module.scss';
 
