@@ -24,8 +24,6 @@
             "@components": ["./src/components"],
             "@styles/*": ["./src/styles/*"],
             "@styles": ["./src/styles"],
-            "@stories/*": ["./src/stories/*"],
-            "@stories": ["./src/stories"],
             "@fe-utils/*": ["./src/utils/*"],
             "@fe-utils": ["./src/utils"],
             "@utils/*": ["./utils/*"],
