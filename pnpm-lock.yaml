@@ -36,6 +36,7 @@ specifiers:
   framer-motion: ^7.10.3
   husky: ^8.0.0
   immer: ^9.0.17
+  is-ci: ^3.0.1
   lint-staged: ^13.1.0
   markdown-loader: ^8.0.0
   nanostores: ^0.6.0
@@ -127,6 +128,7 @@ devDependencies:
   eslint-plugin-react-hooks: 4.6.0_eslint@8.32.0
   eslint-plugin-simple-import-sort: 7.0.0_eslint@8.32.0
   husky: 8.0.3
+  is-ci: 3.0.1
   lint-staged: 13.1.0
   prettier: 2.8.3
   prisma: 4.8.1
@@ -1414,6 +1416,11 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
     dev: false
+
+  /ci-info/3.7.1:
+    resolution: {integrity: sha512-4jYS4MOAaCIStSRwiuxc4B8MYhIe676yO1sYGzARnjXkWpmzZMMYxY6zu8WYWDhSuth5zhrQ1rhNSibyyvv4/w==}
+    engines: {node: '>=8'}
+    dev: true
 
   /clean-stack/2.2.0:
     resolution: {integrity: sha512-4diC9HaTE+KRAMWhDhrGOECgWZxoevMc5TlkObMqNSsVU62PYzXZ/SMTjzyGAFF1YusgxGcSWTEXBhp0CPwQ1A==}
@@ -3059,6 +3066,13 @@ packages:
   /is-callable/1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
+    dev: true
+
+  /is-ci/3.0.1:
+    resolution: {integrity: sha512-ZYvCgrefwqoQ6yTyYUbQu64HsITZ3NfKX1lzaEYdkTDcfKzzCI/wthRRYKkdjHKFVgNiXKAKm65Zo1pk2as/QQ==}
+    hasBin: true
+    dependencies:
+      ci-info: 3.7.1
     dev: true
 
   /is-core-module/2.11.0:
