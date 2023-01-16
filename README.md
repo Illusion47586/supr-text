@@ -15,6 +15,16 @@ You need a `.env.development.local` for local dev setup and a `.env.production.l
 |Key|Expected value|
 |---|--------------|
 |DATABASE_URL|URL of the `MySQL` database|
-|CONTENT_KEY|16 Character Key containing only characters and numbers (generate [here](https://shortunique.id/))|
+|CONTENT_KEY|16 Character Key containing only characters and numbers (generate [here](https://passwordsgenerator.net/?length=16&symbols=0&numbers=1&lowercase=0&uppercase=1&similar=0&ambiguous=0&client=1&autoselect=0))|
 |NEXT_PUBLIC_CONTENT_KEY|Same as above|
 |NEXT_PUBLIC_URL|URL where this instance is running|
+
+## Docker deployment
+
+### With Self Hosted DB
+
+run `bash docker.sh db`
+
+### With remote hosted db
+
+run `bash docker.sh`
