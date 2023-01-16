@@ -1,0 +1,6 @@
+node_modules
+.next
+.vscode
+
+.env.development.local
+.env.production.local

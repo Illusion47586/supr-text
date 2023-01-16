@@ -1,17 +1,23 @@
-FROM node:18.7-alpine
+FROM node:alpine3.17
 
-RUN curl -fsSL https://get.pnpm.io/install.sh | env PNPM_VERSION=7 sh -
+ENV NODE_VERSION 19.4.0
+
+RUN apk add --no-cache libc6-compat
+
+RUN npm i -g pnpm
 
 WORKDIR /opt/app
 
 ENV NODE_ENV development
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml* ./
 
-RUN pnpm i 
+RUN pnpm i --frozen-lockfile
 
 COPY . /opt/app
 
-RUN pnpm i && pnpm build
+COPY ./docker.env /opt/app/.env.production.local
+
+RUN pnpm build:vercel
 
 CMD [ "pnpm", "start" ]
