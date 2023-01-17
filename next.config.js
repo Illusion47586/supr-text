@@ -43,8 +43,8 @@ module.exports = withBundleAnalyzer({
         return [
             {
                 has: [{ type: 'host', value: 'supr-json.vercel.app' }],
-                source: '/:path*',
-                destination: '/api/public/:path*',
+                source: ':query',
+                destination: '/api/public/:query',
                 permanent: true,
             },
         ];
