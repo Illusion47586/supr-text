@@ -40,16 +40,15 @@ module.exports = withBundleAnalyzer({
         },
     ],
     rewrites: async () => {
-        return [
-            {
-                has: [
-                    { type: 'host', value: 'supr-api.vercel.app' },
-                    { type: 'host', value: 'supr-api.findhruv.tech' },
-                ],
-                source: '/:path*',
-                destination: '/api/public/:path*',
-            },
-        ];
+        return {
+            beforeFiles: [
+                {
+                    source: '/:path*',
+                    has: [{ type: 'host', value: 'supr-api.vercel.app' }],
+                    destination: '/api/public/:path*',
+                },
+            ],
+        };
     },
 });
 
