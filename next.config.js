@@ -42,8 +42,12 @@ module.exports = withBundleAnalyzer({
     redirects: async () => {
         return [
             {
-                has: [{ type: 'host', value: 'supr-json.vercel.app' }],
-                destination: '/api/public/',
+                has: [
+                    { type: 'host', value: 'supr-api.vercel.app' },
+                    { type: 'host', value: 'supr-api.findhruv.tech' },
+                ],
+                source: '/*',
+                destination: '/api/public/*',
                 permanent: true,
             },
         ];
