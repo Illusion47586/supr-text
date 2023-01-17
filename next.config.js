@@ -39,17 +39,18 @@ module.exports = withBundleAnalyzer({
             ],
         },
     ],
-    redirects: async () => {
-        return [
-            {
-                has: [
-                    { type: 'host', value: 'supr-api.vercel.app' },
-                    { type: 'host', value: 'supr-api.findhruv.tech' },
-                ],
-                source: '/*',
-                destination: '/api/public/*',
-                permanent: true,
-            },
-        ];
+    rewrites: async () => {
+        return {
+            beforeFiles: [
+                {
+                    has: [
+                        { type: 'host', value: 'supr-api.vercel.app' },
+                        { type: 'host', value: 'supr-api.findhruv.tech' },
+                    ],
+                    source: '/:path*',
+                    destination: '/api/public/:path*',
+                },
+            ],
+        };
     },
 });
