@@ -39,4 +39,14 @@ module.exports = withBundleAnalyzer({
             ],
         },
     ],
+    redirects: async () => {
+        return [
+            {
+                has: [{ type: 'host', value: 'supr-json.vercel.app' }],
+                source: '/:path*',
+                destination: '/api/public/:path*',
+                permanent: true,
+            },
+        ];
+    },
 });
