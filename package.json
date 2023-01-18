@@ -20,9 +20,9 @@
         "prisma:generate:prod": "env-cmd -f .env.production.local prisma generate",
         "prisma:push:prod": "env-cmd -f .env.production.local prisma db push",
         "prisma:generate:docker": "env-cmd -f docker.env prisma generate",
-        "keygen:dev": "env-cmd -f .env.development.local ts-node keygen.ts abcd",
-        "keygen:prod": "env-cmd -f .env.production.local ts-node keygen.ts abcd",
-        "keygen:docker": "env-cmd -f docker.env ts-node keygen.ts abcd",
+        "keygen": "ts-node generator.ts keygen",
+        "cryptogen:dev": "env-cmd -f .env.development.local ts-node generator.ts cryptogen",
+        "cryptogen:prod": "env-cmd -f .env.production.local ts-node generator.ts cryptogen",
         "commit": "cz",
         "prepare": "is-ci || husky install"
     },
