@@ -1,9 +1,6 @@
 import Cryptr from 'cryptr';
 import RandomString from 'randomstring';
 
-const frontCryptr = new Cryptr(process.env.NEXT_PUBLIC_CONTENT_KEY!);
-const serverCryptr = new Cryptr(process.env.CONTENT_KEY!);
-
 const getRandomText = () =>
     RandomString.generate({
         length: 5,
@@ -16,14 +13,19 @@ const generateCryptoVersion = (key = getRandomText()) => {
     console.log('KEY');
     console.log(key);
     console.log();
+
+    const frontCryptr = new Cryptr(process.env.NEXT_PUBLIC_CONTENT_KEY!);
     const fe = frontCryptr.encrypt(key);
     console.log('FRONTEND ONLY CRYPT');
     console.log(fe);
     console.log();
+
+    const serverCryptr = new Cryptr(process.env.CONTENT_KEY!);
     const se = serverCryptr.encrypt(key);
     console.log('SERVER ONLY CRYPT');
     console.log(se);
     console.log();
+
     const fse = serverCryptr.encrypt(fe);
     console.log('FRONTEND + SERVER CRYPT');
     console.log(fse);
