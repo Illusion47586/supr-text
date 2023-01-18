@@ -1,9 +1,11 @@
-import { NextPage } from 'next/types';
 import React, { ReactElement, ReactNode, useState } from 'react';
 import { Toaster, ToastPosition } from 'react-hot-toast';
 import { useEffectOnce } from 'react-use';
 
+import { NextPage } from 'next/types';
+
 import { Header } from '..';
+
 import styles from './index.module.scss';
 
 type Props = {
@@ -52,7 +54,7 @@ const BaseLayout: React.FC<Props> = ({ children }) => {
     );
 };
 
-type HomePage = NextPage & {
+type HomePage<T = Record<string, never>> = NextPage<T> & {
     getLayout?: (page: JSX.Element) => ReactElement;
 };
 

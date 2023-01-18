@@ -39,4 +39,17 @@ module.exports = withBundleAnalyzer({
             ],
         },
     ],
+    rewrites: async () => {
+        return {
+            beforeFiles: [
+                {
+                    source: '/:path*',
+                    has: [{ type: 'host', value: 'supr-api.vercel.app' }],
+                    destination: '/api/public/:path*',
+                },
+            ],
+        };
+    },
 });
+
+// j83m3

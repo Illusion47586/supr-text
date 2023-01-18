@@ -1,5 +1,5 @@
-import { IconProps, IconWeight } from 'phosphor-react';
 import React, { ReactNode } from 'react';
+import { IconProps, IconWeight } from 'phosphor-react';
 
 import styles from './index.module.scss';
 

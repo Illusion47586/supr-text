@@ -1,15 +1,23 @@
-FROM node:18.7-alpine
+FROM node:alpine3.17
+
+ENV NODE_VERSION 19.4.0
+
+RUN apk add --no-cache libc6-compat
+
+RUN npm i -g pnpm
 
 WORKDIR /opt/app
 
 ENV NODE_ENV development
 
-COPY package*.json ./
+COPY package.json pnpm-lock.yaml* ./
 
-RUN npm ci 
+RUN pnpm i --frozen-lockfile
 
 COPY . /opt/app
 
-RUN npm install --include=dev && npm run build
+COPY ./docker.env /opt/app/.env.production.local
 
-CMD [ "npm", "start" ]
+RUN pnpm build:vercel
+
+CMD [ "pnpm", "start" ]

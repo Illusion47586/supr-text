@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { ApplicationState, useNoteStore } from '@state';
-import { useFormik } from 'formik';
-import { motion } from 'framer-motion';
-import { Check } from 'phosphor-react';
 import { useRef } from 'react';
 import toast from 'react-hot-toast';
 import { useClickAway, useKey } from 'react-use';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
+import { useFormik } from 'formik';
+import { motion } from 'framer-motion';
+import { Check } from 'phosphor-react';
+
+import { ApplicationState, useNoteStore } from '@state';
+
+import { baseMotionSettings } from '@fe-utils/base_motion_settings';
 
 import styles from './index.module.scss';
 import Language from './languages';

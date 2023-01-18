@@ -1,8 +1,11 @@
 import prisma, { deleteExpired } from '@prisma/prisma';
 import prismaUtils from '@prisma/utils';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+
 import GenericError from '@utils/errors/generic_error';
 import logger from '@utils/loggers/server';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { cryptr } from '@utils/scripts/crypt';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     try {
@@ -31,9 +34,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 where: { code: _id },
                 select: {
                     content: true,
+                    fileType: true,
                 },
                 data: { remainingCalls: { decrement: 1 } },
             });
+
+            final.content = cryptr.decrypt(final.content);
+
+            if (final.fileType === 'json') {
+                final.content = JSON.parse(final.content);
+            }
 
             return res.status(200).json(final.content);
         }

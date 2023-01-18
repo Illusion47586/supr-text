@@ -1,8 +1,9 @@
 import { Prisma, PrismaClient } from '@prisma/client';
+import RandomString from 'randomstring';
+
 import logger from '@utils/loggers/server';
 import { cryptr, encrypt } from '@utils/scripts/crypt';
 import { decrypt } from '@utils/scripts/crypt-front';
-import RandomString from 'randomstring';
 
 const prisma = new PrismaClient();
 

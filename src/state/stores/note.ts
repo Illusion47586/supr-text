@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { WritableDraft } from 'immer/dist/internal';
-import create from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 

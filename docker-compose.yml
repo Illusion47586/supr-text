@@ -1,9 +1,19 @@
 version: '3.8'
 
 services:
-  application:
-    container_name: supr-text-app
-    build: '.'
-    ports:
-      - "3010:3000"
-    restart: unless-stopped
+    database:
+        profiles:
+            - selfdb
+        image: mysql
+        restart: always
+        env_file:
+            - './docker.env'
+
+    application:
+        container_name: supr-text-app
+        build: '.'
+        ports:
+            - '3010:3000'
+        restart: unless-stopped
+        env_file:
+            - './docker.env'

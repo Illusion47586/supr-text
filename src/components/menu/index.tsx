@@ -1,6 +1,6 @@
+import { FC, useContext } from 'react';
 import { useStore } from '@nanostores/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { NextSeo } from 'next-seo';
 import {
     ArrowFatDown,
     Clipboard,
@@ -10,10 +10,9 @@ import {
     ShareNetwork,
     UploadSimple,
 } from 'phosphor-react';
-import { FC, useContext, useState } from 'react';
-import { useEffectOnce } from 'react-use';
-import { KeyBindingContext } from 'src/state';
-import useNoteStore from 'src/state/stores/note';
+
+import { KeyBindingContext } from '@state';
+import useNoteStore from '@state/stores/note';
 import {
     currentView,
     isExtendedMenuVisible,
@@ -21,10 +20,12 @@ import {
     isMenuVisible,
     toggleCurrentView,
     toggleExtendedMenuVisibility,
-} from 'src/state/stores/toggles';
-import { baseMotionSettings } from 'src/utils/base_motion_settings';
+} from '@state/stores/toggles';
+
+import { baseMotionSettings } from '@fe-utils/base_motion_settings';
 
 import Button, { HorizontalButtonGroup } from '../button';
+
 import Extended from './extended';
 import styles from './index.module.scss';
 import ListOfNotes from './list';
@@ -32,11 +33,6 @@ import ListOfNotes from './list';
 const Menu: FC = () => {
     const context = useContext(KeyBindingContext);
     const store = useNoteStore();
-    const [title, setTitle] = useState('Supr-Text');
-
-    useEffectOnce(() => {
-        setTitle(`${store.getNote().title ?? store.getNote().code ?? store.current} | Supr-Text`);
-    });
 
     const $isMenuVisible = useStore(isMenuVisible);
     const $isExtendedMenuVisible = useStore(isExtendedMenuVisible);
@@ -49,7 +45,6 @@ const Menu: FC = () => {
 
     return (
         <AnimatePresence>
-            {store.current !== 'local' && <NextSeo key="seo-overwrite" title={title} />}
             {$isMenuVisible && true && (
                 <motion.div className={styles.menu} {...baseMotionSettings}>
                     <AnimatePresence>{$isExtendedMenuVisible && <Extended />}</AnimatePresence>
