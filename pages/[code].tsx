@@ -30,7 +30,6 @@ type Props = {
 };
 
 const Note: HomePage<Props> = ({ code, noKey }: Props) => {
-    console.log(code, noKey);
     const store = useNoteStore();
 
     const [note, setNote] = useState<Note | undefined>(undefined);

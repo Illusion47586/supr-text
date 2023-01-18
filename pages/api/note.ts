@@ -12,10 +12,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (req.method && req.method === 'POST') {
             if (!req.body || !req.body.content)
                 return res.status(400).json({ error: 'No content received' });
-            if (req.body.immutable === true && !req.body.password && !req.body.limitToIP)
-                return res
-                    .status(400)
-                    .json({ error: 'Mutables notes need to have a password or IP restriction' });
+            // if (req.body.immutable === true && !req.body.password && !req.body.limitToIP)
+            //     return res
+            //         .status(400)
+            //         .json({ error: 'Mutables notes need to have a password or IP restriction' });
             if (req.body.remainingCalls && req.body.remainingCalls > 5)
                 return res.status(400).json({ error: 'Free notes cannot have more than 5 views' });
             const response = await prisma.note.create({ data: req.body });
